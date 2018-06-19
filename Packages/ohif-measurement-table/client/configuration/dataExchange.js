@@ -20,8 +20,11 @@ export const retrieveMeasurements = (patientId, timepointIds) => {
 
 export const storeMeasurements = (measurementData, timepointIds) => {
     OHIF.log.info('storeMeasurements');
-    //return stowSR.stowSR();
-    return stowSRFromMeasurements(measurementData);
+    const studyInstanceUid = measurementData[Object.keys(measurementData)[0]][0].studyInstanceUid
+
+    return stowSRFromMeasurements(measurementData).then( () => {
+        OHIF.studies.deleteStudyMetadataPromise(studyInstanceUid);
+    });
 };
 
 export const retrieveTimepoints = filter => {
