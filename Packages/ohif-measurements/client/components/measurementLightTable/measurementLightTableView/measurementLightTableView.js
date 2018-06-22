@@ -10,6 +10,37 @@ Template.measurementLightTableView.onCreated(() => {
 
     instance.data.measurementGroups = new ReactiveVar();
 
+    instance.path = 'viewer.studyViewer.measurements';
+    instance.saveObserver = new Tracker.Dependency();
+
+    instance.api = {
+        save() {
+            
+            const successHandler = () => {
+                OHIF.ui.unsavedChanges.clear(`${instance.path}.*`);
+                instance.saveObserver.changed();
+            };
+    
+            // Display the error messages
+            const errorHandler = data => {
+                OHIF.ui.showDialog('dialogInfo', Object.assign({ class: 'themed' }, data));
+            };
+    
+            const promise = instance.data.measurementApi.storeMeasurements();
+            promise.then(successHandler).catch(errorHandler);
+            OHIF.ui.showDialog('dialogLoading', {
+                promise,
+                text: 'STOW SR Completed! '
+            });
+    
+            return promise;
+        },
+        exportCSV() {
+            const { measurementApi, timepointApi } = instance.data;
+            OHIF.measurements.exportCSV(measurementApi, timepointApi);
+        }
+    };
+
     Tracker.autorun(() => {
         measurementApi.changeObserver.depend();
         const data = OHIF.measurements.getMeasurementsGroupedByNumber(measurementApi, timepointApi);
@@ -17,14 +48,16 @@ Template.measurementLightTableView.onCreated(() => {
     });
 });
 
-Template.measurementLightTableView.events({
-    'click .js-csv'(event, instance) {
-        const { measurementApi, timepointApi } = instance.data;
-        OHIF.measurements.exportCSV(measurementApi, timepointApi);
-    },
-});
-
 Template.measurementLightTableView.helpers({
+    noUnsavedChanges() {
+        const instance = Template.instance();
+        // Run this computation on save or every time any measurement / timepoint suffer changes
+        OHIF.ui.unsavedChanges.depend();
+        instance.saveObserver.depend();
+    
+        return OHIF.ui.unsavedChanges.probe('viewer.*') === 0;
+    },
+
     hasAnyMeasurement() {
         const instance = Template.instance();
         const groups = instance.data.measurementGroups.get();

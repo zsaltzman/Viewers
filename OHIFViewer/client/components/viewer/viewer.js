@@ -277,11 +277,6 @@ Template.viewer.events({
         instance.data.state.set('rightSidebar', !current);
     },
 
-    'click .saveMeasurementsToSR'() {
-        const instance = Template.instance();
-        instance.data.measurementApi.storeMeasurements();
-    },
-
     'cornerstonetoolsmeasurementadded .imageViewerViewport'(event, instance) {
         const originalEvent = event.originalEvent;
         OHIF.measurements.MeasurementHandlers.onAdded(originalEvent, instance);
