@@ -60,9 +60,10 @@ OHIF.measurements.exportPdf = (measurementApi, timepointApi) => {
         printMeasurement(measurement, callback);
     };
 
-    const targets = measurementApi.fetch('targets', { timepointId });
-    const nonTargets = measurementApi.fetch('nonTargets', { timepointId });
-    const measurements = targets.concat(nonTargets);
+    const measurements = [];
+    Object.keys(measurementApi.toolGroups).forEach( key => {
+        measurements = measurements.concat(measurementApi.fetch(key, { timepointId }));
+    });
     const iterator = measurements[Symbol.iterator]();
 
     processMeasurements(() => report.save('measurements.pdf'));
