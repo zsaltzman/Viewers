@@ -26,13 +26,8 @@ MeteorKeycloak.requestCredential = function(options, credentialRequestCompleteCa
     const authServerUrl = config["auth-server-url"];
     const realm = config['realm'];
     const clientId = config["resource"];
-
-
     const credentialToken = Random.secret();
-
     const loginStyle = "redirect";
-
-
     const realmUrl = `${authServerUrl}/realms/${realm}`;
     const redirectUri = OAuth._redirectUri(serviceName, config);
     const state = OAuth._stateParam(loginStyle, credentialToken, options && options.redirectUrl);
