@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 
-/*Router.onBeforeAction(function() {
+Router.onBeforeAction(function() {
     // Check if user is signed in
     if (!Meteor.userId() && !Meteor.loggingIn()) {
         this.render('userLogin');
@@ -10,4 +10,4 @@ import { Router } from 'meteor/iron:router';
     }
 }, {
     except: ['userLogin', 'entrySignUp', 'forgotPassword', 'resetPassword']
-});*/
+});
