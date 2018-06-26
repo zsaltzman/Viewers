@@ -1,17 +1,18 @@
 Package.describe({
-    name: 'ohif:user-management',
+    name: 'ohif:user-keycloak',
     summary: 'OHIF Lesion Tracker Tools',
     version: '0.0.1'
 });
 
 Package.onUse(function(api) {
-    api.versionsFrom('1.4');
+    api.versionsFrom('1.6');
 
     api.use('ecmascript');
     api.use('standard-app-packages');
     api.use('jquery');
     api.use('stylus');
     api.use('random');
+    api.use('service-configuration');
 
     // Schema for Data Models
     api.use('aldeed:simple-schema');
@@ -26,11 +27,16 @@ Package.onUse(function(api) {
     api.use('ohif:user');
     api.use('ohif:study-list');
 
+    api.use('clinical:active-entry');
+    api.use('mxab:keycloak-oauth');
+    api.use('mxab:keycloak-loader');
+    api.use('mxab:accounts-keycloak');
+
     // Load icons
     api.addAssets('assets/user-menu-icons.svg', 'client');
 
     // Client imports
     api.addFiles('client/index.js', 'client');
 
-    api.addFiles('server/createDemoUser.js', [ 'server' ]);
+    api.addFiles('server/setup.js', 'server');
 });

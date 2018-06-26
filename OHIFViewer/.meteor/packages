@@ -51,3 +51,10 @@ gilbertwat:bootstrap3-daterangepicker
 johdirr:meteor-git-rev
 u2622:persistent-session@0.4.4
 shell-server@0.3.0
+
+ohif:user-keycloak
+mxab:accounts-keycloak
+accounts-base
+accounts-oauth
+clinical:active-entry
+mxab:keycloak-loader
