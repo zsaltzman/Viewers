@@ -35,9 +35,13 @@ Template.measurementLightTableView.onCreated(() => {
     
             return promise;
         },
+
         exportCSV() {
-            const { measurementApi, timepointApi } = instance.data;
             OHIF.measurements.exportCSV(measurementApi, timepointApi);
+        },
+
+        exportPDF() {
+            OHIF.measurements.exportPdf(measurementApi, timepointApi);
         }
     };
 

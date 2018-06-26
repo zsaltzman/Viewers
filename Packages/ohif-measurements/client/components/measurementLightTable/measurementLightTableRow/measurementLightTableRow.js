@@ -40,6 +40,8 @@ Template.measurementLightTableRow.events({
         const rowItem = instance.data.rowItem;
         const timepoints = instance.data.timepoints.get();
 
+        if($row.hasClass('active')) return;
+
         $row.closest('.measurementLightTableView').find('.measurementLightTableRow').not($row).removeClass('active');
         $row.toggleClass('active');
 
@@ -47,15 +49,14 @@ Template.measurementLightTableRow.events({
         OHIF.measurements.jumpToRowItem(rowItem, timepoints, childToolKey);
     },
 
-    'click .js-rename'(event, instance) {
+    'click .locationContainer'(event, instance) {
         event.stopPropagation();
         const rowItem = instance.data.rowItem;
         const entry = rowItem.entries[0];
 
         // Show the measure flow for measurements
-        OHIF.measurements.toggleLabelButton({
+        OHIF.measurements.openLocationModal({
             measurement: entry,
-            oldValue: {},
             element: document.body,
             measurementApi: instance.data.measurementApi,
             position: {

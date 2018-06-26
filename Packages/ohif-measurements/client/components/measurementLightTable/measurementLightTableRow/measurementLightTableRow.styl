@@ -9,52 +9,6 @@
   transform(scale(1))
   width: calc(100% + 6px)
 
-  &:hover
-    opacity 1
-
-  &.active
-    opacity 1
-    .measurementRowSidebar
-      theme('color', '$activeColor')
-
-    .rowOptions
-      height: 35px
-      visibility: visible
-
-  .rowOptions
-    theme('background-color', '$uiGrayDarker')
-    height: 0
-    overflow: hidden
-    transition(all 0.3s ease)
-    visibility: hidden
-    padding-left: 14px
-
-    .rowAction
-      theme('color', '$defaultColor')
-      cursor: pointer
-      line-height: 35px
-      transition(all 0.3s ease)
-
-      &:hover, &:active
-        theme('color', '$textPrimaryColor')
-
-        svg
-          theme('fill', '$textPrimaryColor')
-          theme('stroke', '$textPrimaryColor')
-
-    svg
-      theme('fill', '$defaultColor')
-      theme('stroke', '$defaultColor')
-      transition(all 0.3s ease)
-
-      &.edit-icon
-        width: 14px
-        height: 13px
-
-      &.close-icon
-        width: 11px
-        height: 11px
-
   .measurementRowSidebar
     theme('background', '$uiGray')
     theme('color', '$textSecondaryColor')
@@ -70,18 +24,88 @@
       padding-top: 10px
       text-align: center
 
+  &:hover
+    opacity: 1
+    background-color: #101010
+
+  &.active
+    opacity: 1
+    background-color: #101010
+    .measurementRowSidebar
+      theme('color', '$activeColor')
+
+    .measurementDetails
+      height: 105px
+
+      .nonEditableContent
+        display: none
+
+      .measurementContainer
+        .descriptionContainer, .locationContainer
+          display: block
+          &:hover .edit-icon-container
+            visibility: visible
+
+
   .measurementRowContent
     flex: 1
 
   .measurementDetails
-    padding: 5px 2px 0 14px
+    padding: 5px;
     line-height: 30px
     font-size: 14px
+    transition(all 0.3s ease)
+    height: 70px
 
-    .location
+    .measurementValue
+        margin: 0px 7px
+        theme('color', '$textPrimaryColor')
+
+  .measurementContainer
+    display: flex
+
+    .nonEditableContent
+      display: block
+      margin: 0px 7px
+      font-weight: 100
+
+    .descriptionContainer, .locationContainer
+      theme('border', '1px solid $uiGray')
+      position: relative
+      flex: 50    
+      padding: 7px
+      margin: 2px 4px
+      display: none
+
+    .inputLabel
       theme('color', '$textSecondaryColor')
-      font-weight: 400
-      margin-left: -2px
+      display: block
+      font-size: 12px
+      line-height: 12px
+      margin-bottom: 5px
+      
+      font-weight: 100
 
-    .value
+    .locationValue, .descriptionValue
       theme('color', '$textPrimaryColor')
+      background-color: transparent
+      border: 0
+      padding: 0
+      margin-bottom: 0px
+      line-height: 18px
+      font-size: 13px
+      transition(all 0.3s ease)
+      font-weight: 100
+
+    .edit-icon-container
+      visibility: hidden
+      position: absolute
+      transition(all 0.1s ease)
+      top: 15px
+      right: 15px
+
+      .edit-icon, .close-icon
+        theme('fill', '$uiGray')
+        theme('stroke', '$uiGray')
+        width: 14px
+        height: 13px

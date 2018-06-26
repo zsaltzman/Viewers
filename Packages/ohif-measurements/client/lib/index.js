@@ -20,5 +20,6 @@ import './navigateOverLesions';
 import './saveMeasurements';
 import './syncMeasurementAndToolData';
 import './toggleLabelButton';
+import './openLocationModal';
 import './triggerTimepointUnsavedChanges';
 import './updateMeasurementsDescription';

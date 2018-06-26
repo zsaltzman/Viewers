@@ -12,38 +12,38 @@
         </div>
         <div class="measurementRowContent">
             <div class="measurementDetails">
-                <label class='location'>
-                    {{#if rowItem.location}}
-                        {{rowItem.location}}
-                    {{else}}
-                        (No Location)
-                    {{/if}}
-                </label>
-                <label class="description">
-                    {{#if rowItem.description}}
-                        {{rowItem.description}}
-                    {{/if}}
-                </label>
-                <div class="value">
-                    {{#if displayData}}
-                        {{{displayData}}}
-                    {{else}}
-                        ...
-                    {{/if}}
+                <div class="measurementContainer">
+                    <div class="nonEditableContent">
+                        <label class="locationValue">{{#if rowItem.location}}{{rowItem.location}}{{else}}(No location){{/if}}</label>
+                        <label class="descriptionValue">{{#if rowItem.description}}{{rowItem.description}}{{/if}}</label>
+                    </div>
+                    <div class="locationContainer">
+                        <label class="inputLabel">Location</label>
+                        <label class="locationValue">{{#if rowItem.location}}{{rowItem.location}}{{else}}(Add a location){{/if}}</label>
+                        <span class="edit-icon-container pull-right">
+                            <svg class="edit-icon">
+                                <use xlink:href={{absoluteUrl "packages/ohif_viewerbase/assets/icons.svg#icon-measurements-additional"}}></use>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="descriptionContainer">
+                        <label class="inputLabel">Description</label>
+                        <label class="descriptionValue">{{#if rowItem.description}}{{rowItem.description}}{{else}}(Add a description){{/if}}</label>
+                        <span class="edit-icon-container pull-right">
+                            <svg class="edit-icon">
+                                <use xlink:href={{absoluteUrl "packages/ohif_viewerbase/assets/icons.svg#icon-measurements-additional"}}></use>
+                            </svg>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="rowOptions">
-                <div class="rowAction js-rename pull-left m-r-2" tabindex="1">
-                    <svg class="edit-icon">
-                        <use xlink:href={{absoluteUrl "packages/ohif_viewerbase/assets/icons.svg#icon-measurements-additional"}}></use>
-                    </svg>
-                    Relabel
-                </div>
-                <div class="rowAction js-delete pull-left" tabindex="1">
-                    <svg class="close-icon">
-                        <use xlink:href={{absoluteUrl "packages/ohif_viewerbase/assets/icons.svg#icon-ui-close"}}></use>
-                    </svg>
-                    Delete
+                <div class="measurementValue">
+                    <div class="value">
+                        {{#if displayData}}
+                            {{{displayData}}}
+                        {{else}}
+                            ...
+                        {{/if}}
+                    </div>
                 </div>
             </div>
         </div>
