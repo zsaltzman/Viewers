@@ -1,1 +1,2 @@
-import './audit';
+import './audit.js';
+import './login.js';
