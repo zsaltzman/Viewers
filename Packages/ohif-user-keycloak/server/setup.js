@@ -20,3 +20,16 @@ ServiceConfiguration.configurations.upsert(
         }
     }
 );
+
+Meteor.publish('user.services.keycloak', function() {
+    const userId = this.userId;
+    if (!userId) {
+        return [];
+    }
+
+    return Meteor.users.find(userId, {
+            fields: {
+                'services.keycloak': 1
+            }
+    });
+});
