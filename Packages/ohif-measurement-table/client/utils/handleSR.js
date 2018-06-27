@@ -4,7 +4,7 @@ import {
     getAllSRSeries,
     getLatestSRSeries,
     multipartEncode,
-    getWADOProxyUrl
+    getSTOWUrl
 } from './srUtilities';
 
 const retrieveMeasurementFromSR = (srSeries) => {
@@ -30,31 +30,31 @@ const retrieveMeasurementFromSR = (srSeries) => {
 };
 
 const stowSRFromMeasurements = (measurements) => {
-    const wadoProxyURL = getWADOProxyUrl();
+    const stowURL = getSTOWUrl();
     const reportDataset = convertMeasurementsToSR(measurements);
     const boundary = dcmjs.data.DicomMetaDictionary.uid();
     const multipartBuffer = multipartEncode(reportDataset, boundary);
-    
+
     console.log(reportDataset);
-    
+
     return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest();
-        request.open("POST", wadoProxyURL);
+        request.open("POST", stowURL);
         request.onload = (resp) => {
             console.log('STOWSR resp: ', resp);
             resolve();
         };
-        
+
         request.onerror = (error) => {
             console.log('STOWSR error: ', error);
             reject();
         }
-        
+
         request.setRequestHeader(
             'Content-Type',
             `multipart/related; type=application/dicom; boundary=${boundary}`
         );
-        
+
         request.send(multipartBuffer);
     });
 };
