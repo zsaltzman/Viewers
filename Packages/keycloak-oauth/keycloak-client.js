@@ -1,3 +1,6 @@
+import { Random } from 'meteor/random';
+import { ServiceConfiguration } from 'meteor/service-configuration';
+
 MeteorKeycloak = {};
 
 // Request MeteorKeycloak credentials for the user
@@ -7,8 +10,6 @@ MeteorKeycloak = {};
 //   completion. Takes one argument, credentialToken on success, or Error on
 //   error.
 MeteorKeycloak.requestCredential = function(options, credentialRequestCompleteCallback) {
-    console.warn('requestCredential');
-
     // support both (options, callback) and (callback).
     if (!credentialRequestCompleteCallback && typeof options === 'function') {
         credentialRequestCompleteCallback = options;
@@ -23,11 +24,12 @@ MeteorKeycloak.requestCredential = function(options, credentialRequestCompleteCa
             new ServiceConfiguration.ConfigError());
         return;
     }
+
     const authServerUrl = config["auth-server-url"];
     const realm = config['realm'];
     const clientId = config["resource"];
     const credentialToken = Random.secret();
-    const loginStyle = "redirect";
+    const loginStyle = config.loginStyle || "redirect";
     const realmUrl = `${authServerUrl}/realms/${realm}`;
     const redirectUri = OAuth._redirectUri(serviceName, config);
     const state = OAuth._stateParam(loginStyle, credentialToken, options && options.redirectUrl);
@@ -49,10 +51,6 @@ MeteorKeycloak.requestCredential = function(options, credentialRequestCompleteCa
     if (options && options.auth_type) {
         loginUrl += "&auth_type=" + encodeURIComponent(options.auth_type);
     }
-
-    console.warn('loginUrl');
-    console.warn(options);
-    console.warn(loginUrl);
 
     OAuth.launchLogin({
         loginService: serviceName,

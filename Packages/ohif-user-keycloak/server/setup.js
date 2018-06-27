@@ -11,6 +11,7 @@ ServiceConfiguration.configurations.upsert(
             "resource": "ohif-viewer",
             "client_id": "ohif-viewer",
             "public-client": false,
+            "loginStyle": 'popup',
             "use-resource-role-mappings": false,
             "bearer-only": false,
             "secret": '822d7f77-d6fb-40e2-80e4-b99bb3dc6aca',

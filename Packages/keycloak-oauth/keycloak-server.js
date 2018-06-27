@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import session from 'express-session';
 import Keycloak from "keycloak-connect";
+import { ServiceConfiguration } from 'meteor/service-configuration';
 
 MeteorKeycloak = {};
+
 /**
  *
  * @param {Grant} grant
@@ -50,30 +52,25 @@ OAuth.registerService('keycloak', 2, null, function(query) {
  */
 function getGrant(query) {
     const config = getKeycloakConfig();
-
-    const memoryStore = new session.MemoryStore();
-    config.store = memoryStore;
-
     const keycloak = new Keycloak(config, config);
     const redirectUri = OAuth._redirectUri('keycloak', config);
     const code = query.code;
-    const auth_redirect_uri = config.auth_redirect_uri;
 
-    const result = Meteor.wrapAsync(function(keycloak, auth_redirect_uri, code, callback) {
+    config.store =  new session.MemoryStore();
+
+    return Meteor.wrapAsync(function(keycloak, auth_redirect_uri, code, callback) {
         const request = {
             session: {
                 auth_redirect_uri
             }
         };
 
-        const sessionId = 'test';
-        const sessionHost = 'test2';
+        const sessionId = null;
+        const sessionHost = null;
 
         keycloak.grantManager.obtainFromCode(request, code, sessionId, sessionHost, callback);
     })(keycloak, redirectUri, code);
-
-    return result;
-};
+}
 
 MeteorKeycloak.retrieveCredential = function(credentialToken, credentialSecret) {
     return OAuth.retrieveCredential(credentialToken, credentialSecret);
