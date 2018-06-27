@@ -28,7 +28,7 @@
   },
   "keycloak": {
     "realmName": "dcm4che",
-    "authServerUrl": "https://dockerhost:8843/auth",
+    "authServerUrl": "http://dockerhost/auth",
     "authRedirectUri": "/studylist",
     "sslRequired": "none",
     "clientId": "ohif-viewer",
