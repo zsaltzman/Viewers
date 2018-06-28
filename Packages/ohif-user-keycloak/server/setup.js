@@ -1,12 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { ServiceConfiguration } from 'meteor/service-configuration';
+import { Accounts } from "meteor/accounts-base";
+import 'isomorphic-fetch';
 
 ServiceConfiguration.configurations.upsert(
     {service: 'keycloak'},
     {
         $set: {
-            "realm": Meteor.settings.keycloak.realmName,
-            "auth-server-url": Meteor.settings.keycloak.authServerUrl,
+            "realm": Meteor.settings.public.custom.keycloak.realmName,
+            "auth-server-url": Meteor.settings.public.custom.keycloak.authServerUrl,
             "auth_redirect_uri": Meteor.settings.keycloak.authRedirectUri,
             "ssl-required": Meteor.settings.keycloak.sslRequired,
             "resource": Meteor.settings.keycloak.clientId,
@@ -31,5 +33,14 @@ Meteor.publish('user.services.keycloak', function() {
             fields: {
                 'services.keycloak': 1
             }
+    });
+});
+
+Accounts.onLogout(({ user }) => {
+    // Erase any Keycloak token that exists
+    Meteor.users.update(user._id, {
+        $unset: {
+            'services.keycloak': 1
+        }
     });
 });

@@ -4,6 +4,10 @@ Package.describe({
     version: '0.0.1'
 });
 
+Npm.depends({
+    'isomorphic-fetch': '2.2.1'
+});
+
 Package.onUse(function(api) {
     api.versionsFrom('1.6');
 

@@ -21,14 +21,18 @@
     "verifyEmail": false,
     "ui": {
         "studyListFunctionsEnabled": true
+    },
+    "custom": {
+      "keycloak": {
+        "authServerUrl": "http://dockerhost/auth",
+        "realmName": "dcm4che"
+      }
     }
   },
   "proxy": {
     "enabled": false
   },
   "keycloak": {
-    "realmName": "dcm4che",
-    "authServerUrl": "http://dockerhost/auth",
     "authRedirectUri": "/studylist",
     "sslRequired": "none",
     "clientId": "ohif-viewer",
