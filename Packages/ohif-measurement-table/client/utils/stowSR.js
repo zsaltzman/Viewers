@@ -1,22 +1,24 @@
 // This can be pasted into the wip-add-dcmjs branch of git@github.com:ohif/Viewers
 // to store current length measurements back to the source DICOMweb server.
 
+import {Meteor} from "meteor/meteor";
+
 function parametersFromImageId(imageId) {
     const decodedImageId = decodeURIComponent(imageId);
     return(new URLSearchParams(decodedImageId));
   }
-  
+
   function parametersFromToolState() {
     const imageToolState = cornerstoneTools.globalImageIdSpecificToolStateManager.saveToolState();
-  
+
     const imageId0 = Object.keys(imageToolState)[0];
     return parametersFromImageId(imageId0);
   }
-  
+
   function srFromToolState() {
-  
+
     const parameters = parametersFromToolState();
-  
+
     // TODO: figure out what is needed to make a dcmjs dataset from
     // information available in the viewer.  Apparently the raw dicom is not available
     // directly.
@@ -28,7 +30,7 @@ function parametersFromImageId(imageId) {
     };
     report = new dcmjs.derivations.StructuredReport([derivationSourceDataset]);
     dataset = report.dataset;
-  
+
     // TODO: what is the correct metaheader
     // http://dicom.nema.org/medical/Dicom/current/output/chtml/part10/chapter_7.html
     // TODO: move meta creation to dcmjs
@@ -42,11 +44,11 @@ function parametersFromImageId(imageId) {
       ImplementationClassUID: dcmjs.data.DicomMetaDictionary.uid(), // TODO: could be git hash or other valid id
       ImplementationVersionName: "OHIFViewer",
     };
-  
+
     // TODO: factor out a lot of this back into dcmjs for use in both
     // the example and in the Viewer
     var measurementGroupContentSequence = [];
-  
+
     // TODO: make a TID1550 derivation as an SR subclass
     dataset.ConceptNameCodeSequence = {
       CodeValue: '126000',
@@ -75,12 +77,12 @@ function parametersFromImageId(imageId) {
       CodingSchemeVersion: "0",
       CodingSchemeResponsibleOrganization: "https://github.com/pieper/dcmjs",
     };
-  
+
     dataset.ContentTemplateSequence = {
       MappingResource: 'DCMR',
       TemplateIdentifier: '1500',
     };
-  
+
     dataset.ContentSequence = [
       {
         RelationshipType: 'HAS CONCEPT MOD',
@@ -195,7 +197,7 @@ function parametersFromImageId(imageId) {
         },
       },
     ];
-  
+
     var measurementGroupContentItem = function(ReferencedSOPInstanceUID, handles, distance, frame) {
       return ([
         {
@@ -267,76 +269,76 @@ function parametersFromImageId(imageId) {
         },
       ]);
     }
-  
+
     const imageToolState = cornerstoneTools.globalImageIdSpecificToolStateManager.saveToolState();
     Object.keys(imageToolState).forEach(function(imageId) {
       if (imageToolState[imageId]) {
         imageToolState[imageId].length.data.forEach(function(length) {
-  
+
           let handles = length.handles;
           //let frame = Number(imageId.slice(imageId.lastIndexOf('frame')).split('=')[1]); // TODO: frame is explicit somewhere?
-  
+
           imageParameters = parametersFromImageId(imageId);
           let ReferencedInstanceUID = imageParameters.get('objectUID');
           let frame = imageParameters.get('frame');
-  
+
           // extend list in place
           measurementGroupContentSequence.push.apply(measurementGroupContentSequence, measurementGroupContentItem(ReferencedInstanceUID, handles, length.length, frame));
         });
       }
     });
-  
+
     return(dataset);
   }
-  
+
   //
   // return a post-able multipart encoded dicom from the blob
   //
   function multipartEncode(dataset, boundary) {
-  
+
     const denaturalizedMetaheader = dcmjs.data.DicomMetaDictionary.denaturalizeDataset(dataset._meta);
     const dicomDict = new dcmjs.data.DicomDict(denaturalizedMetaheader);
-  
+
     dicomDict.dict = dcmjs.data.DicomMetaDictionary.denaturalizeDataset(dataset);
-  
+
     const part10Buffer = dicomDict.write();
-  
+
     const header = `\r\n--${boundary}\r\nContent-Type: application/dicom\r\n\r\n`;
     const footer = `\r\n--${boundary}--`;
-  
+
     const stringToArray = (string) => Uint8Array.from(Array.from(string).map(letter => letter.charCodeAt(0)));
-  
+
     headerArray = stringToArray(header);
     contentArray = new Uint8Array(part10Buffer);
     footerArray = stringToArray(footer);
-  
+
     const multipartArray = new Uint8Array(headerArray.length + contentArray.length + footerArray.length);
-  
+
     multipartArray.set(headerArray, 0);
     multipartArray.set(contentArray, headerArray.length);
     multipartArray.set(footerArray, headerArray.length + contentArray.length);
-  
+
     return(multipartArray.buffer);
   }
-  
+
 export function stowSR() {
     const reportDataset = srFromToolState();
-    
+
     console.log(reportDataset);
-  
+
     const parameters = parametersFromToolState();
-  
+
     const wadoProxyURLPrefix = "dicomweb:/__wado_proxy?url";
     const wadoURL = parameters.get(wadoProxyURLPrefix);
     const serverId = parameters.get('serverId');
     const aetURLPrefix = wadoURL.slice(0, wadoURL.search('/wado'));
     const stowURL = `${aetURLPrefix}/rs/studies`;
-  
+
     const boundary = dcmjs.data.DicomMetaDictionary.uid();
     const multipartBuffer = multipartEncode(reportDataset, boundary);
-  
+
     const wadoProxyURL = `/__wado_proxy?url=${stowURL}&serverId=${serverId}`;
-  
+
     const stowRequest = new XMLHttpRequest();
     stowRequest.open("POST", wadoProxyURL);
     stowRequest.onload = console.log;
@@ -344,6 +346,12 @@ export function stowSR() {
                   'Content-Type',
                   `multipart/related; type=application/dicom; boundary=${boundary}`
     );
+
+    if (Meteor.user().services.keycloak) {
+        const accessToken = Meteor.user().services.keycloak.accessToken;
+
+        stowRequest.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+    }
+
     stowRequest.send(multipartBuffer);
   }
-  

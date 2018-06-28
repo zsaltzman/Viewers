@@ -4,12 +4,16 @@ import {
     retrieveMeasurementFromSR,
     stowSRFromMeasurements
 } from '../utils/handleSR';
+
 import stowSR from '../utils/stowSR';
 
 export const retrieveMeasurements = (patientId, timepointIds) => {
     OHIF.log.info('retrieveMeasurements');
 
     const latestSeries = getLatestSRSeries();
+    if (!latestSeries) {
+        return Promise.resolve({});
+    }
 
     return retrieveMeasurementFromSR(latestSeries).then((value) => {
         return {

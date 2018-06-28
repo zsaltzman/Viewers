@@ -6,6 +6,7 @@ import {
     multipartEncode,
     getSTOWUrl
 } from './srUtilities';
+import {Meteor} from "meteor/meteor";
 
 const retrieveMeasurementFromSR = (srSeries) => {
     const instance = srSeries.getFirstInstance();
@@ -14,6 +15,11 @@ const retrieveMeasurementFromSR = (srSeries) => {
         let request = new XMLHttpRequest();
         request.responseType = 'arraybuffer';
         request.open('GET', instance.getDataProperty('wadouri'));
+
+        if (Meteor.user().services.keycloak) {
+            const accessToken = Meteor.user().services.keycloak.accessToken;
+            request.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+        }
 
         request.onload = function (progressEvent) {
             const measurements = convertSRToMeasurements(progressEvent.currentTarget.response);
@@ -48,12 +54,18 @@ const stowSRFromMeasurements = (measurements) => {
         request.onerror = (error) => {
             console.log('STOWSR error: ', error);
             reject();
-        }
+        };
 
         request.setRequestHeader(
             'Content-Type',
             `multipart/related; type=application/dicom; boundary=${boundary}`
         );
+
+        if (Meteor.user().services.keycloak) {
+            const accessToken = Meteor.user().services.keycloak.accessToken;
+
+            request.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+        }
 
         request.send(multipartBuffer);
     });
