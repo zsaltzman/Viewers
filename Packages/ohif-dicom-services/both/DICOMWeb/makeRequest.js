@@ -3,7 +3,6 @@ import { OHIF } from 'meteor/ohif:core';
 
 async function makeRequest(geturl, options) {
     const parsed = new URL(geturl);
-    const jsonHeaders = ['application/json', 'application/dicom+json'];
 
     let requestOpt = {
         method: 'GET'
