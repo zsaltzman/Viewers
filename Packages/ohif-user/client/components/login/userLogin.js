@@ -36,10 +36,12 @@ Template.userLogin.onCreated(() => {
 
 Template.userLogin.events({
     'click .js-login-keycloak'() {
-        Meteor.loginWithMeteorKeycloak({}, function(error, result) {
+        Meteor.loginWithMeteorKeycloak({}, function(error) {
            if (error) {
                throw new Error(error);
            }
+
+           Router.go('/studylist');
         });
     }
 });

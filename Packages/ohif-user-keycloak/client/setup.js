@@ -5,12 +5,12 @@ Router.waitOn(function() {
     return [
         Meteor.subscribe('user.services.keycloak'),
     ];
-}, { except: ['userLogin', 'entrySignUp', 'forgotPassword', 'resetPassword'] });
+}, { except: ['userLogin'] });
 
 Router.onBeforeAction(function() {
     // Check if user is signed in
     if (!Meteor.userId() && !Meteor.loggingIn()) {
-        this.render('userLogin');
+        this.redirect('userLogin');
     } else {
         this.next();
     }

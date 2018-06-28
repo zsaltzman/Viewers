@@ -26,16 +26,8 @@ async function makeRequest(geturl, options) {
 
     return new Promise((resolve, reject) => {
         fetch(parsed.href, requestOpt).then((response) => {
-            if (response.status === 400) {
-                reject(new Error(400));
-            }
-
-            // TODO: handle errors with 400+ code
-            const contentType = (response.headers['content-type'] || '').split(';')[0];
-            if (jsonHeaders.indexOf(contentType) === -1) {
-                const errorMessage = `We only support json but "${contentType}" was sent by the server`;
-                reject(new Error(errorMessage));
-                return;
+            if (response.status >= 400) {
+                reject(new Error(response.status));
             }
 
             resolve(response.json());
