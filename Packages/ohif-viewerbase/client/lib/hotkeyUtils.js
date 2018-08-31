@@ -112,6 +112,7 @@ Meteor.startup(function() {
         angle: 'Angle Measurement',
         dragProbe: 'Pixel Probe',
         ellipticalRoi: 'Elliptical ROI',
+        freehand: 'Freehand ROI',
         rectangleRoi: 'Rectangle ROI',
         magnify: 'Magnify',
         annotate: 'Annotate',

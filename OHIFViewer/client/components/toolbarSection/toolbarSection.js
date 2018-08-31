@@ -113,6 +113,13 @@ Template.toolbarSection.helpers({
         });
 
         extraTools.push({
+            id: 'freehand',
+            title: 'Freehand',
+            classes: 'imageViewerTool',
+            iconClasses: 'fa fa-circle-o'
+        });
+
+        extraTools.push({
             id: 'rectangleRoi',
             title: 'Rectangle',
             classes: 'imageViewerTool',

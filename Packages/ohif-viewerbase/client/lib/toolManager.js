@@ -40,7 +40,7 @@ let gestures = {
 
 let toolDefaultStates = {
     activate: [],
-    deactivate: ['length', 'angle', 'annotate', 'ellipticalRoi', 'rectangleRoi', 'spine'],
+    deactivate: ['length', 'angle', 'annotate', 'ellipticalRoi', 'freehand', 'rectangleRoi', 'spine'],
     enable: [],
     disable: [],
     disabledToolButtons: [],
@@ -106,6 +106,9 @@ export const toolManager = {
         toolManager.addTool('ellipticalRoi', {
             mouse: cornerstoneTools.ellipticalRoi,
             touch: cornerstoneTools.ellipticalRoiTouch
+        });
+        toolManager.addTool('freehand', {
+            mouse: cornerstoneTools.freehand
         });
         toolManager.addTool('rectangleRoi', {
             mouse: cornerstoneTools.rectangleRoi,
