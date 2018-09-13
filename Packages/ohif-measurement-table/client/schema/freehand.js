@@ -6,8 +6,7 @@ const CornerstoneHandleSchema = MeasurementSchemaTypes.CornerstoneHandleSchema;
 const MeanStdDevSchema = new SimpleSchema({
     count: {
         type: Number,
-        label: 'count',
-        decimal: true
+        label: 'count'
     },
     mean: {
         type: Number,
@@ -26,14 +25,34 @@ const MeanStdDevSchema = new SimpleSchema({
     }
 });
 
+const pointSchema = new SimpleSchema({
+    x: {
+        type: Number,
+        decimal: true,
+        optional: true
+    },
+    y: {
+        type: Number,
+        decimal: true,
+        optional: true
+    }
+});
+
+const FreehandHandleData = new SimpleSchema([MeasurementSchemaTypes.CornerstoneHandleSchema, {
+    lines: {
+        type: [pointSchema],
+        optional: true
+    }
+}]);
+
 const toolSchema = new SimpleSchema([MeasurementSchemaTypes.CornerstoneToolMeasurement, {
     handles: {
         type: Array,
         label: 'Handles'
     },
     'handles.$': {
-        type: CornerstoneHandleSchema,
-        label: 'Handles'
+        type: FreehandHandleData,
+        label: 'FreehandHandleData'
     },
     textBox: {
         type: CornerstoneHandleSchema,
@@ -79,6 +98,26 @@ const displayFunction = data => {
     return meanValue;
 };
 
+const treatData = data => {
+    data.handles = deepClone(data.handles);
+    data.handles.forEach( handle => {
+        handle.lines = deepClone(handle.lines);
+    });
+};
+
+const deepClone = array => {
+    const handles = [];
+    array.forEach( obj => {
+        const handle = {};
+        Object.keys(obj).forEach( index => {
+            handle[index] = obj[index];
+        });
+        handles.push(handle);
+    });
+
+    return handles;
+};
+
 export default {
     id: 'freehand',
     name: 'Freehand',
@@ -87,7 +126,8 @@ export default {
     schema: toolSchema,
     options: {
         measurementTable: {
-            displayFunction
+            displayFunction,
+            treatData
         }
     }
 };

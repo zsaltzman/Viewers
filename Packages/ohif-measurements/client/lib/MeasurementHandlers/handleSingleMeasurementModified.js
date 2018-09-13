@@ -2,6 +2,7 @@ import { _ } from 'meteor/underscore';
 import { OHIF } from 'meteor/ohif:core';
 import { cornerstone } from 'meteor/ohif:cornerstone';
 
+
 export default function ({ instance, eventData, tool, toolGroupId, toolGroup }) {
     const { measurementApi } = instance.data;
     const { measurementData, toolType } = eventData;
@@ -34,8 +35,19 @@ export default function ({ instance, eventData, tool, toolGroupId, toolGroup }) 
         measurement.viewport = cornerstone.getViewport(eventData.element);
     }
 
+    if (tool.options.measurementTable && tool.options.measurementTable.treatData) {
+        tool.options.measurementTable.treatData(measurement);
+    }
+
     // Update the measurement in the collection
-    Collection.update(measurementId, { $set: measurement });
+    if (measurement.handles) {
+        try {
+            Collection.update(measurementId, { $set: measurement });
+        } catch (e) {
+            console.log(`Error trying to save schema: ${e.message}`);
+            return;
+        }
+    }
 
     // Notify that viewer suffered changes
     if (tool.toolGroup !== 'temp') {
