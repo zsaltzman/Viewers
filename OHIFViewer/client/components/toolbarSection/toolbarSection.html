@@ -1,7 +1,21 @@
 <template name="toolbarSection">
+    <!--
+        // Or use the strategy here in JS: https://forums.meteor.com/t/litelement-import-litelement-html/45042/8
+        // mkdir -p imports/links
+        // cd imports/links
+        // ln -s ../../node_modules/@polymer .
+        // ln -s ../../node_modules/@webcomponents .
+        // import '@polymer/paper-checkbox';
+    -->
+    <script src="https://unpkg.com/@polymer/paper-checkbox@next/paper-checkbox.js?module" type="module" ></script>
+
+    
     <div class="toolbarSection noselect p-x-2">
         <div class="clearfix">
             <div class="pull-left m-t-1">
+                <div>
+                    <paper-checkbox>Web Components!</paper-checkbox>
+                </div>
                 {{>roundedButtonGroup leftSidebarToggleButtonData}}
             </div>
             {{>toolbarSectionTools toolbarButtons=toolbarButtons}}
