@@ -67,7 +67,7 @@ function urlHasSignInResponse() {
 
 Router.onRun(function() {
     const next = this.next;
-    const redirect_uri = Meteor.absoluteUrl(this.request.url);
+    const redirect_uri = this.request.url;
 
     if (OHIF.user.userLoggedIn()) {
         next()
