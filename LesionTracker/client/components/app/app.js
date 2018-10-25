@@ -48,7 +48,7 @@ Template.app.onCreated(() => {
         if (!currentRoute || !currentRoute.route) {
             return;
         }
-        
+
         const routeName = currentRoute.route.getName();
         const isViewer = routeName.indexOf('viewer') === 0;
 
