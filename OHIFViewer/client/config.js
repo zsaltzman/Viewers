@@ -5,6 +5,7 @@ import { cornerstoneWADOImageLoader } from 'meteor/ohif:cornerstone';
 Meteor.startup(function() {
     const maxWebWorkers = Math.max(navigator.hardwareConcurrency - 1, 1);
     const config = {
+        strict: false,
         maxWebWorkers: maxWebWorkers,
         startWebWorkersOnDemand: true,
         webWorkerPath: OHIF.utils.absoluteUrl('packages/ohif_cornerstone/public/js/cornerstoneWADOImageLoaderWebWorker.es5.js'),

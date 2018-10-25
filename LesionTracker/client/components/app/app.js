@@ -45,7 +45,10 @@ Template.app.onCreated(() => {
 
     instance.autorun(() => {
         const currentRoute = Router.current();
-        if (!currentRoute) return;
+        if (!currentRoute || !currentRoute.route) {
+            return;
+        }
+        
         const routeName = currentRoute.route.getName();
         const isViewer = routeName.indexOf('viewer') === 0;
 
