@@ -63,23 +63,44 @@ const loadError = function(error, studyInstanceUid, displaySetInstanceUid) {
 };
 
 class FlexboxLayout extends Component {
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        studies: PropTypes.array.isRequired,
+        leftSidebarOpen: PropTypes.bool.isRequired,
+        rightSidebarOpen: PropTypes.bool.isRequired,
+        stackLoadingProgressMap: PropTypes.object
+    };
 
-        this.state = {
-            studiesForBrowser: this.getStudiesForBrowser(),
-        };
-
-        this.getStudiesForBrowser = this.getStudiesForBrowser.bind(this);
-        this.getThumbnailsFromImageIds = this.getThumbnailsFromImageIds.bind(this);
-    }
+    state = {
+        studiesForBrowser: []
+    };
 
     componentDidMount() {
-        this.getThumbnailsFromImageIds();
+        const studiesForBrowser = this.getStudiesForBrowser();
+
+        this.setState({
+            studiesForBrowser
+        });
+
+        this.getThumbnailsFromImageIds(studiesForBrowser);
     }
 
-    getThumbnailsFromImageIds() {
-        this.state.studiesForBrowser.forEach(function (study) {
+    /*
+    TODO: This needs to be rewritten, it is constantly updating the thumbnail images
+    on progress updates
+    componentDidUpdate(prevProps) {
+        if (this.props.stackLoadingProgressMap !== prevProps.stackLoadingProgressMap) {
+            const studiesForBrowser = this.getStudiesForBrowser();
+
+            this.setState({
+                studiesForBrowser
+            });
+
+            this.getThumbnailsFromImageIds(studiesForBrowser);
+        }
+    }*/
+
+    getThumbnailsFromImageIds = (studiesForBrowser) => {
+        studiesForBrowser.forEach(function (study) {
             const { studyInstanceUid } = study;
 
             study.thumbnails.forEach(function (displaySet) {
@@ -96,8 +117,8 @@ class FlexboxLayout extends Component {
 
     }
 
-    getStudiesForBrowser() {
-        const { studies } = this.props;
+    getStudiesForBrowser = () => {
+        const { studies, stackLoadingProgressMap } = this.props;
 
         // TODO[react]:
         // - Add sorting of display sets
@@ -109,10 +130,18 @@ class FlexboxLayout extends Component {
             const { studyInstanceUid } = study;
 
             const thumbnails = study.displaySets.map((displaySet) => {
-                const active = false;
-                const stackPercentComplete = 0;
                 const { displaySetInstanceUid, seriesDescription, seriesNumber, instanceNumber, numImageFrames } = displaySet;
+                const active = false;
+                const stackId = `StackProgress:${displaySetInstanceUid}`;
+                const stackProgressData = stackLoadingProgressMap[stackId];
+
+                let stackPercentComplete = 0;
+                if (stackProgressData) {
+                    stackPercentComplete = stackProgressData.percentComplete;
+                }
+
                 const imageId = displaySet.images[0].getImageId();
+
                 return {
                     imageSrc: '',
                     imageId,
@@ -159,11 +188,5 @@ class FlexboxLayout extends Component {
         );
     }
 }
-
-FlexboxLayout.propTypes = {
-    studies: PropTypes.array.isRequired,
-    leftSidebarOpen: PropTypes.bool.isRequired,
-    rightSidebarOpen: PropTypes.bool.isRequired,
-};
 
 export default FlexboxLayout;
