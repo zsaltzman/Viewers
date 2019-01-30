@@ -2969,10 +2969,10 @@ cornerstone-math@^0.1.6, cornerstone-math@^0.1.7, cornerstone-math@^0.1.8:
   resolved "https://registry.yarnpkg.com/cornerstone-math/-/cornerstone-math-0.1.8.tgz#68ab1f9e4fdcd7c5cb23a0d2eb4263f9f894f1c5"
   integrity sha512-x7NEQHBtVG7j1yeyj/aRoKTpXv1Vh2/H9zNLMyqYJDtJkNng8C4Q8M3CgZ1qer0Yr7eVq2x+Ynmj6kfOm5jXKw==
 
-cornerstone-tools@3.0.0-b.1512:
-  version "3.0.0-b.1512"
-  resolved "https://registry.yarnpkg.com/cornerstone-tools/-/cornerstone-tools-3.0.0-b.1512.tgz#64e60709b7b638c08d201313a5748aa6f5145337"
-  integrity sha512-+lpoPJnTTkGq61XZzrNfAVhYJprBYqFZc++D0TgVUUOfAlXn5I016+cabfRQ/K65ecTfd8RitFK/LrIBUE7D2Q==
+cornerstone-tools@3.0.0-b.1664:
+  version "3.0.0-b.1664"
+  resolved "https://registry.yarnpkg.com/cornerstone-tools/-/cornerstone-tools-3.0.0-b.1664.tgz#eb585f3f0395eebb0e1801818f68ce2c54afff65"
+  integrity sha512-zaCmlIouRR8kzzDtBxEJCADPuLc8X5nboab64tRnEk7297t4/NJ4H4gt7QKWfg3mJkU+DhNkAZYRMi1h4Qpzjw==
   dependencies:
     "@babel/runtime" "7.1.2"
     cornerstone-math "^0.1.7"
@@ -3404,13 +3404,14 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
-dcmjs@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/dcmjs/-/dcmjs-0.3.0.tgz#d065a65b3df14d6028542760de6143f0acdc2ed0"
-  integrity sha512-k6La/q+ROPjoAPQCWIWd49XUGUzolLG6qJhEMdSAhYEa4WP6CLyjIgL1Ul2NqM7Vxyd74ydHi537AWxOtdSxmA==
+dcmjs@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/dcmjs/-/dcmjs-0.3.1.tgz#75b140ee79d86494fd6c309696cbc76e5cb7f494"
+  integrity sha512-KIRJ86fyqJUcu35IlwJH7nBU5R5D0jhcNU2rHCeVPuyeSbicEmteReKTYD57bxWllBZrmdyJJfKnIgSU2h4olQ==
   dependencies:
     babel-polyfill "^6.26.0"
     babel-runtime "^6.26.0"
+    loglevel "^1.6.1"
 
 debug@*, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0:
   version "4.1.1"
@@ -7362,7 +7363,7 @@ log-update@^2.3.0:
     cli-cursor "^2.0.0"
     wrap-ansi "^3.0.1"
 
-loglevel@^1.4.1:
+loglevel@^1.4.1, loglevel@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
   integrity sha1-4PyVEztu8nbNyIh82vJKpvFW+Po=
@@ -8216,10 +8217,17 @@ octal@^1.0.0:
   resolved "https://registry.yarnpkg.com/octal/-/octal-1.0.0.tgz#63e7162a68efbeb9e213588d58e989d1e5c4530b"
   integrity sha1-Y+cWKmjvvrniE1iNWOmJ0eXEUws=
 
+<<<<<<< HEAD
 ohif-core@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/ohif-core/-/ohif-core-0.2.3.tgz#2eea4806f44dd98740afe4fec6fb2a038c496197"
   integrity sha512-wBfZOxmRhrkDPFlmoADzxeuNlGiZGa2azbFkpUosxW+8yciuwmOvh21e0bd3uwAkotinrItWihnRR9gz8bG2DA==
+=======
+ohif-core@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ohif-core/-/ohif-core-0.2.1.tgz#6f3b3aed29b9c709b8abe2a6f0155a1fa09f81af"
+  integrity sha512-X3/Jcw7EkgSqmaO2zIu19Wc5nJKcoS3AmgwbV0f7LHLQUkvJvVAtljslcBUMKgiaYFc/fJcTmr16oApsGJyGvA==
+>>>>>>> wip2
   dependencies:
     "@babel/runtime" "^7.2.0"
     cornerstone-core "^2.2.8"
