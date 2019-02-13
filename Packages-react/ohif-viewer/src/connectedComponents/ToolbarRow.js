@@ -5,7 +5,6 @@ import ConnectedCineDialog from './ConnectedCineDialog.js';
 import PropTypes from 'prop-types';
 import { ToolbarButton, RoundedButtonGroup } from 'react-viewerbase';
 import './ToolbarRow.css';
-//import Icons from "../images/icons.svg"
 
 const Icons = 'icons.svg';
 
