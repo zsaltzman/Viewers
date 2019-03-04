@@ -1,4 +1,4 @@
-cd docs
+cd docs/latest
 npm -v
 node -v 
 echo 'Installing Gitbook CLI'
@@ -7,7 +7,7 @@ npm install
 echo 'Running Gitbook installation'
 ./node_modules/gitbook-cli/bin/gitbook.js install
 ./node_modules/gitbook-cli/bin/gitbook.js build
-cd ..
+cd ../..
 
 # Build and copy the StandaloneViewer into the static directory
 cd StandaloneViewer
@@ -21,4 +21,4 @@ meteor-build-client-fixed2 --version
 curl https://install.meteor.com | /bin/sh
 export PATH=$HOME/.meteor:$PATH
 meteor npm install
-meteor-build-client-fixed2 ../../docs/_book/viewer -u $ROOT_URL --path './' --legacy
+meteor-build-client-fixed2 ../../docs/latest/_book/viewer -u $ROOT_URL --path './' --legacy
