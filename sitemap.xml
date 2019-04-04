@@ -11,6 +11,7 @@
 <url> <loc>https://docs.ohif.org/connecting-to-image-archives/dimse.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/connecting-to-image-archives/dcm4chee-with-docker.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/connecting-to-image-archives/orthanc-with-docker.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://docs.ohif.org/connecting-to-image-archives/google-cloud-healthcare.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/connecting-to-image-archives/osirix.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/data/data-hierarchy.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/data/image-viewport.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
