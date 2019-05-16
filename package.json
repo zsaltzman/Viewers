@@ -1,15 +1,13 @@
 {
-  "name": "ohif-viewers-docs",
-  "version": "1.0.0",
+  "name": "ohif-viewer-latest-docs",
+  "version": "2.0.0",
   "description": "Open Health Imaging Foundation Viewers Metarepo for documentation",
   "main": ".eslintrc.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "gitbook install && gitbook serve",
-    "docs:deploy": "bash ./update-docs.sh"
+    "docs": "gitbook install && gitbook serve"
   },
   "repository": {
     "type": "git",
@@ -37,7 +35,8 @@
     "gitbook-plugin-ga": "^2.0.0",
     "gitbook-plugin-github": "^3.0.0",
     "gitbook-plugin-sitemap": "^1.2.0",
-    "gitbook-plugin-theme-cornerstone": "^1.1.1"
+    "gitbook-plugin-theme-cornerstone": "^1.1.2",
+    "gitbook-plugin-versions": "^2.1.4"
   },
   "devDependencies": {
     "gitbook-cli": "^2.3.2"
