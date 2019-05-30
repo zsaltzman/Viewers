@@ -21,5 +21,6 @@
 <url> <loc>https://docs.ohif.org/connecting-to-image-archives/google-cloud-healthcare.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/contributing.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/frequently-asked-questions.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://docs.ohif.org/roadmap.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://docs.ohif.org/help.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 </urlset>
