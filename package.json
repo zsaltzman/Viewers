@@ -66,7 +66,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.2.0",
-    "@ohif/extension-cornerstone": "0.0.34",
+    "@ohif/extension-cornerstone": "0.0.35",
     "@ohif/extension-dicom-microscopy": "0.0.6",
     "@ohif/extension-vtk": "0.0.2",
     "classnames": "^2.2.6",
