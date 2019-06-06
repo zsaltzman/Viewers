@@ -34,6 +34,7 @@ class StudyListWithData extends Component {
     //const params = { studyInstanceUids, seriesInstanceUids, timepointId, timepointsFilter={} };
 
     this.searchForStudies();
+    this.props.toggleLoadingBar();
   }
 
   searchForStudies = (

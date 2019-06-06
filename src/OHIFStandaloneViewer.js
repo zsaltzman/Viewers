@@ -8,8 +8,12 @@ import StandaloneRouting from './routes/StandaloneRouting.js';
 import CallbackPage from './CallbackPage.js';
 import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
+import { NProgress } from '@tanem/react-nprogress';
 import { connect } from 'react-redux';
 import { ViewerbaseDragDropContext } from 'react-viewerbase';
+import Container from './Container.js';
+import Bar from './Bar.js';
+import { toggleLoadingBar } from './redux/actions.js';
 
 import './OHIFStandaloneViewer.css';
 import './variables.css';
@@ -32,6 +36,11 @@ import './theme-tide.css';
 const reload = () => window.location.reload();
 
 class OHIFStandaloneViewer extends Component {
+  constructor(props) {
+    super(props);
+    this.props.toggleLoadingBar();
+  }
+
   static propTypes = {
     history: PropTypes.object.isRequired,
     user: PropTypes.object,
@@ -81,21 +90,45 @@ class OHIFStandaloneViewer extends Component {
 
     return (
       <Switch>
-        <Route exact path="/silent-refresh.html" onEnter={reload} />
-        <Route exact path="/logout-redirect.html" onEnter={reload} />
-        <Route exact path="/studylist" component={StudyListRouting} />
-        <Route exact path="/" component={StudyListRouting} />
-        <Route exact path="/viewer" component={StandaloneRouting} />
-        <Route path="/viewer/:studyInstanceUids" component={ViewerRouting} />
         <Route
-          path="/study/:studyInstanceUid/series/:seriesInstanceUids"
-          component={ViewerRouting}
+          render={({ location }) => (
+            <React.Fragment>
+              <NProgress isAnimating={this.props.isLoading} key={location.key}>
+                {({ isFinished, progress, animationDuration }) => (
+                  <Container
+                    isFinished={isFinished}
+                    animationDuration={animationDuration}
+                  >
+                    <Bar
+                      progress={progress}
+                      animationDuration={animationDuration}
+                    />
+                  </Container>
+                )}
+              </NProgress>
+              <Route exact path="/silent-refresh.html" onEnter={reload} />
+              <Route exact path="/logout-redirect.html" onEnter={reload} />
+              <Route exact path="/studylist" component={StudyListRouting} />
+              <Route exact path="/" component={StudyListRouting} />
+              <Route exact path="/viewer" component={StandaloneRouting} />
+              <Route
+                path="/viewer/:studyInstanceUids"
+                component={ViewerRouting}
+              />
+              <Route
+                path="/study/:studyInstanceUid/series/:seriesInstanceUids"
+                component={ViewerRouting}
+              />
+              <Route
+                path="/IHEInvokeImageDisplay"
+                component={IHEInvokeImageDisplay}
+              />
+              <Route
+                render={() => <div> Sorry, this page does not exist. </div>}
+              />
+            </React.Fragment>
+          )}
         />
-        <Route
-          path="/IHEInvokeImageDisplay"
-          component={IHEInvokeImageDisplay}
-        />
-        <Route render={() => <div> Sorry, this page does not exist. </div>} />
       </Switch>
     );
   }
@@ -104,12 +137,21 @@ class OHIFStandaloneViewer extends Component {
 const mapStateToProps = state => {
   return {
     user: state.oidc.user,
+    isLoading: state.ui.isLoading,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleLoadingBar: () => {
+      dispatch(toggleLoadingBar());
+    },
   };
 };
 
 const ConnectedOHIFStandaloneViewer = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(OHIFStandaloneViewer);
 
 export default ViewerbaseDragDropContext(
