@@ -33,9 +33,9 @@ const ui = (state = defaultState, action) => {
         labelling: defaultState.labelling,
         contextMenu: defaultState.contextMenu,
       });
-    case 'TOGGLE_LOADING_BAR':
+    case 'SET_LOADING_BAR':
       return Object.assign({}, state, {
-        isLoading: !state.isLoading,
+        isLoading: action.state,
       });
 
     default:

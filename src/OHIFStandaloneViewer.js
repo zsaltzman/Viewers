@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { ViewerbaseDragDropContext } from 'react-viewerbase';
 import Container from './Container.js';
 import Bar from './Bar.js';
-import { toggleLoadingBar } from './redux/actions.js';
+import { setLoadingBar } from './redux/actions.js';
 
 import './OHIFStandaloneViewer.css';
 import './variables.css';
@@ -38,7 +38,7 @@ const reload = () => window.location.reload();
 class OHIFStandaloneViewer extends Component {
   constructor(props) {
     super(props);
-    this.props.toggleLoadingBar();
+    this.props.setLoadingBar(true);
   }
 
   static propTypes = {
@@ -143,8 +143,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleLoadingBar: () => {
-      dispatch(toggleLoadingBar());
+    setLoadingBar: options => {
+      dispatch(setLoadingBar(options));
     },
   };
 };
