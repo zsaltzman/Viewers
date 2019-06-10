@@ -729,9 +729,29 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="extensions"><a name="extensions" class="plugin-anchor" href="#extensions"><i class="fa fa-link" aria-hidden="true"></i></a>Extensions</h1>
-<p>Extensions add new functionality to the viewer by registering one or more modules. They go one step further than configuration in that they allow us to inject custom React components, so long as they adhere to the module&apos;s interface. This can be something as simple as adding a new button to the toolbar, or as complex as a new viewport capable of rendering volumes in 3D.</p>
+<p>Extensions add new functionality to the viewer by registering one or more
+modules. They go one step further than configuration in that they allow us to
+inject custom React components, so long as they adhere to the module&apos;s
+interface. This can be something as simple as adding a new button to the
+toolbar, or as complex as a new viewport capable of rendering volumes in 3D.</p>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#modules">Modules</a><ul>
+<li><a href="#viewport">Viewport</a></li>
+<li><a href="#toolbar">Toolbar</a></li>
+<li><a href="#sopclasshandler">SOP Class Handler</a></li>
+<li><a href="#panel">Panel</a></li>
+<li><a href="#commands">Commands</a></li>
+<li><a href="#hotkeys">Hotkeys</a></li>
+</ul>
+</li>
+</ul>
 <h2 id="overview"><a name="overview" class="plugin-anchor" href="#overview"><i class="fa fa-link" aria-hidden="true"></i></a>Overview</h2>
-<p>At a glance, an extension is a class or object that has a <code>getExtensionId()</code> method, and one or more &quot;module&quot; methods. You can find an abbreviated extension below, or <a href="https://github.com/OHIF/Viewers/blob/react/extensions/ohif-cornerstone-extension/src/OHIFCornerstoneExtension.js#L32-L65" target="_blank">view the source</a> of our <code>cornerstone</code> viewport extension.</p>
+<p>At a glance, an extension is a class or object that has a <code>getExtensionId()</code>
+method, and one or more &quot;module&quot; methods. You can find an abbreviated extension
+below, or
+<a href="https://github.com/OHIF/Viewers/blob/react/extensions/ohif-cornerstone-extension/src/OHIFCornerstoneExtension.js#L32-L65" target="_blank">view the source</a>
+of our <code>cornerstone</code> viewport extension.</p>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">myCustomExtension</span> </span>{
 
     <span class="hljs-comment">/** Required */</span>
@@ -759,9 +779,16 @@
 }
 </code></pre>
 <h3 id="modules"><a name="modules" class="plugin-anchor" href="#modules"><i class="fa fa-link" aria-hidden="true"></i></a>Modules</h3>
-<p>There are a few different kinds of modules. Each kind of module allows us to extend the viewer in a different way, and provides a consistent API for us to do so. You can find a full list of the <a href="https://github.com/OHIF/ohif-core/blob/43c08a29eff3fb646a0e83a03a236ddd84f4a6e8/src/plugins.js#L1-L6" target="_blank">different types of modules <code>in ohif-core</code></a>. Information on each type of module, it&apos;s API, and how we determine when/where it should be used is included below:</p>
+<p>There are a few different kinds of modules. Each kind of module allows us to
+extend the viewer in a different way, and provides a consistent API for us to do
+so. You can find a full list of the
+<a href="https://github.com/OHIF/ohif-core/blob/43c08a29eff3fb646a0e83a03a236ddd84f4a6e8/src/plugins.js#L1-L6" target="_blank">different types of modules <code>in ohif-core</code></a>.
+Information on each type of module, it&apos;s API, and how we determine when/where it
+should be used is included below:</p>
 <h4 id="viewport"><a name="viewport" class="plugin-anchor" href="#viewport"><i class="fa fa-link" aria-hidden="true"></i></a>Viewport</h4>
-<p>An extension can register a Viewport Module by providing a <code>getViewportModule()</code> method that returns a React Component. The React component will receive the following props:</p>
+<p>An extension can register a Viewport Module by providing a <code>getViewportModule()</code>
+method that returns a React Component. The React component will receive the
+following props:</p>
 <pre><code class="lang-js">children: PropTypes.arrayOf(PropTypes.element)
 studies: PropTypes.object,
 displaySet: PropTypes.object,
@@ -770,7 +797,8 @@ viewportIndex: PropTypes.number,
 children: PropTypes.node,
 customProps: PropTypes.object
 </code></pre>
-<p>Viewport components are managed by the <code>LayoutManager</code>. Which Viewport component is used depends on:</p>
+<p>Viewport components are managed by the <code>LayoutManager</code>. Which Viewport component
+is used depends on:</p>
 <ul>
 <li>The Layout Configuration</li>
 <li>Registered SopClassHandlers</li>
@@ -779,27 +807,42 @@ customProps: PropTypes.object
 <p><img src="../assets/img/extensions-viewport.png" alt="Cornerstone Viewport"></p>
 <center><i>An example of three Viewports</i></center>
 
-<p>For a complete example implementation, <a href="https://github.com/OHIF/Viewers/blob/react/extensions/ohif-cornerstone-extension/src/OHIFCornerstoneViewport.js" target="_blank">check out the OHIFCornerstoneViewport</a>.</p>
+<p>For a complete example implementation,
+<a href="https://github.com/OHIF/Viewers/blob/react/extensions/ohif-cornerstone-extension/src/OHIFCornerstoneViewport.js" target="_blank">check out the OHIFCornerstoneViewport</a>.</p>
 <h4 id="toolbar"><a name="toolbar" class="plugin-anchor" href="#toolbar"><i class="fa fa-link" aria-hidden="true"></i></a>Toolbar</h4>
-<p>An extension can register a Toolbar Module by providing a <code>getToolbarModule()</code> method that returns a React Component. The component does not receive any props. If you want to modify or react to state, you will need to connect to the redux store.</p>
+<p>An extension can register a Toolbar Module by providing a <code>getToolbarModule()</code>
+method that returns a React Component. The component does not receive any props.
+If you want to modify or react to state, you will need to connect to the redux
+store.</p>
 <p><img src="../assets/img/extensions-toolbar.gif" alt="Toolbar Extension"></p>
 <center><i>A toolbar extension example</i></center>
 
 <p>Toolbar components are rendered in the <code>ToolbarRow</code> component.</p>
-<p>For a complete example implementation, <a href="https://github.com/OHIF/Viewers/blob/react/extensions/ohif-cornerstone-extension/src/ToolbarModule.js" target="_blank">check out the OHIFCornerstoneViewport&apos;s Toolbar Module</a>.</p>
+<p>For a complete example implementation,
+<a href="https://github.com/OHIF/Viewers/blob/react/extensions/ohif-cornerstone-extension/src/ToolbarModule.js" target="_blank">check out the OHIFCornerstoneViewport&apos;s Toolbar Module</a>.</p>
 <h4 id="sopclasshandler"><a name="sopclasshandler" class="plugin-anchor" href="#sopclasshandler"><i class="fa fa-link" aria-hidden="true"></i></a>SopClassHandler</h4>
 <p>...</p>
 <h4 id="panel"><a name="panel" class="plugin-anchor" href="#panel"><i class="fa fa-link" aria-hidden="true"></i></a>Panel</h4>
 <blockquote>
 <p>The panel module is not yet in use.</p>
 </blockquote>
+<h4 id="commands"><a name="commands" class="plugin-anchor" href="#commands"><i class="fa fa-link" aria-hidden="true"></i></a>Commands</h4>
+<p>...</p>
+<h4 id="hotkeys"><a name="hotkeys" class="plugin-anchor" href="#hotkeys"><i class="fa fa-link" aria-hidden="true"></i></a>Hotkeys</h4>
+<p>...</p>
 <h3 id="registering-extensions"><a name="registering-extensions" class="plugin-anchor" href="#registering-extensions"><i class="fa fa-link" aria-hidden="true"></i></a>Registering Extensions</h3>
-<p>Extensions are registered for the application at startup. The <code>ExtensionManager</code>, exposed by <code>ohif-core</code>, registers a list of extensions with our application&apos;s store. Each module provided by the extension becomes available via <code>state.plugins.availablePlugins</code>, and consists of three parts: id, type (<a href="https://github.com/OHIF/ohif-core/blob/43c08a29eff3fb646a0e83a03a236ddd84f4a6e8/src/plugins.js#L1-L6" target="_blank">PLUGIN_TYPE</a>), and the return value of the module method.</p>
-<p>In a future version, we will likely expose a way to provide the extensions you would like included at startup.</p>
+<p>Extensions are registered for the application at startup. The
+<code>ExtensionManager</code>, exposed by <code>ohif-core</code>, registers a list of extensions with
+our application&apos;s store. Each module provided by the extension becomes available
+via <code>state.plugins.availablePlugins</code>, and consists of three parts: id, type
+(<a href="https://github.com/OHIF/ohif-core/blob/43c08a29eff3fb646a0e83a03a236ddd84f4a6e8/src/plugins.js#L1-L6" target="_blank">PLUGIN_TYPE</a>),
+and the return value of the module method.</p>
+<p>In a future version, we will likely expose a way to provide the extensions you
+would like included at startup.</p>
 <p><em>app.js</em></p>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createStore, combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux&quot;</span>;
-<span class="hljs-keyword">import</span> OHIF <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ohif-core&quot;</span>;
-<span class="hljs-keyword">import</span> OHIFCornerstoneExtension <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ohif-cornerstone-extension&quot;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createStore, combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;redux&apos;</span>;
+<span class="hljs-keyword">import</span> OHIF <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;ohif-core&apos;</span>;
+<span class="hljs-keyword">import</span> OHIFCornerstoneExtension <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;ohif-cornerstone-extension&apos;</span>;
 
 <span class="hljs-keyword">const</span> combined = combineReducers(OHIF.redux.reducers);
 <span class="hljs-keyword">const</span> store = createStore(combined);
@@ -810,7 +853,11 @@ customProps: PropTypes.object
 ExtensionManager.registerExtensions(store, extensions);
 </code></pre>
 <h2 id="ohif-maintained-extensions"><a name="ohif-maintained-extensions" class="plugin-anchor" href="#ohif-maintained-extensions"><i class="fa fa-link" aria-hidden="true"></i></a>OHIF Maintained Extensions</h2>
-<p>A small number of powerful extensions for popular use cases are maintained by OHIF. They&apos;re co-located in the <a href="https://github.com/OHIF/Viewers/tree/react/" target="_blank"><code>OHIF/Viewers</code></a> repository, in the top level <a href="https://github.com/OHIF/Viewers/tree/react/extensions" target="_blank"><code>extensions/</code></a> directory.</p>
+<p>A small number of powerful extensions for popular use cases are maintained by
+OHIF. They&apos;re co-located in the
+<a href="https://github.com/OHIF/Viewers/tree/react/" target="_blank"><code>OHIF/Viewers</code></a> repository, in the
+top level <a href="https://github.com/OHIF/Viewers/tree/react/extensions" target="_blank"><code>extensions/</code></a>
+directory.</p>
 <table>
     <thead>
         <tr>
@@ -917,7 +964,7 @@ ExtensionManager.registerExtensions(store, extensions);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Extensions","level":"2.3","depth":1,"next":{"title":"Overview","level":"2.3.1","depth":2,"anchor":"#overview","path":"advanced/extensions.md","ref":"advanced/extensions.md#overview","articles":[]},"previous":{"title":"Common Questions","level":"2.2.6","depth":2,"anchor":"#common-questions","path":"advanced/architecture.md","ref":"advanced/architecture.md#common-questions","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","theme-cornerstone","-fontsettings","github","ga","sitemap","anchors","versions"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/OHIF/Viewers"},"search":{},"theme-cornerstone":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"sitemap":{"hostname":"https://docs.ohif.org"},"ga":{"configuration":"auto","token":"UA-110573590-2"},"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/OHIF/Viewers/master/docs/book.json","options":[{"value":"https://docs.ohif.org/history/v1/","text":"Version 1.0.0 (Meteor)"},{"value":"https://docs.ohif.org/","text":"Version 2.0.0","selected":true}]},"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/OHIF/Viewers/edit/master/docs"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"OHIF","links":{"sharing":{"facebook":false,"twitter":false}},"gitbook":">3.0.0","description":"Documentation for the OHIF framework"},"file":{"path":"advanced/extensions.md","mtime":"2019-06-06T14:29:18.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-06T14:32:23.767Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Extensions","level":"2.3","depth":1,"next":{"title":"Overview","level":"2.3.1","depth":2,"anchor":"#overview","path":"advanced/extensions.md","ref":"advanced/extensions.md#overview","articles":[]},"previous":{"title":"Common Questions","level":"2.2.6","depth":2,"anchor":"#common-questions","path":"advanced/architecture.md","ref":"advanced/architecture.md#common-questions","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","theme-cornerstone","-fontsettings","github","ga","sitemap","anchors","versions"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/OHIF/Viewers"},"search":{},"theme-cornerstone":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"sitemap":{"hostname":"https://docs.ohif.org"},"ga":{"configuration":"auto","token":"UA-110573590-2"},"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/OHIF/Viewers/master/docs/book.json","options":[{"value":"https://docs.ohif.org/history/v1/","text":"Version 1.0.0 (Meteor)"},{"value":"https://docs.ohif.org/","text":"Version 2.0.0","selected":true}]},"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/OHIF/Viewers/edit/master/docs"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"OHIF","links":{"sharing":{"facebook":false,"twitter":false}},"gitbook":">3.0.0","description":"Documentation for the OHIF framework"},"file":{"path":"advanced/extensions.md","mtime":"2019-06-10T02:09:58.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-10T02:12:25.026Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
