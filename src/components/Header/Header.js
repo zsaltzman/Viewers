@@ -49,20 +49,13 @@ class Header extends Component {
     const { t } = this.props;
     this.options = [
       {
-        title: t('Info'),
+        title: t('About'),
         icon: { name: 'info' },
         onClick: () => {
           this.setState({
             isOpen: true,
           });
         },
-      },
-      {
-        title: t('About'),
-        icon: {
-          name: 'info',
-        },
-        link: 'http://ohif.org',
       },
     ];
 
