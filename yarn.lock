@@ -1042,7 +1042,7 @@
     classnames "^2.2.6"
     react-vtkjs-viewport "^0.0.7"
 
-"@ohif/i18n@0.0.4":
+"@ohif/i18n@0.0.4", "@ohif/i18n@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@ohif/i18n/-/i18n-0.0.4.tgz#e54176e7799e311dbaff37995f9d2745b58cbd0f"
   integrity sha512-lW+S9weZbJS300yCRR8Ygb1KTULbD1Qx5ZGcYUXyseJIWr5jeJ4V/6FdS30w8u8ejiIVwF8rYOguHsmueQrkdw==
@@ -11801,13 +11801,16 @@ react-transition-group@^2.0.0, react-transition-group@^2.2.0:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-viewerbase@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/react-viewerbase/-/react-viewerbase-0.7.1.tgz#5a27f2f7d327dfd8f8dfe26e6d5d3a911deeee85"
-  integrity sha512-xQVK8s3Etk51zR0mW8eVh49emWM6X8sgwnVO3WXtdWf6rewePYqFcFTZ2n4iV/Ru+NeZHNlC4lpOq9wN8SjcpA==
+react-viewerbase@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-viewerbase/-/react-viewerbase-0.9.0.tgz#947ab61bf32e1d58836a637403d128247e175d2e"
+  integrity sha512-VeOGzno5fg9A0Ttx+O3CQ8KXPr1XbdEOVbA+JiLwcuycX3CmDsqLzODsjeXb8npfXDbQA+n/ZPCyxsB7JDEBlA==
   dependencies:
     "@babel/runtime" "7.2.0"
+    "@ohif/i18n" "^0.0.4"
     classnames "2.2.6"
+    i18next "^17.0.3"
+    i18next-browser-languagedetector "^3.0.1"
     lodash.isequal "4.5.0"
     moment "2.24.0"
     prop-types "15.6.2"
@@ -11815,6 +11818,7 @@ react-viewerbase@0.7.1:
     react-dates "18.4.1"
     react-dnd "7.0.2"
     react-dnd-touch-backend "^0.8.3"
+    react-i18next "^10.11.0"
     react-with-direction "1.3.0"
 
 react-vtkjs-viewport@^0.0.7:

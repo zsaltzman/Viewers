@@ -8,7 +8,7 @@ import { withTranslation } from 'react-i18next';
 import './Header.css';
 import OHIFLogo from '../OHIFLogo/OHIFLogo.js';
 import PropTypes from 'prop-types';
-// import { UserPreferencesModal } from 'react-viewerbase';
+import { AboutModal } from 'react-viewerbase';
 import { hotkeysManager } from './../../App.js';
 
 class Header extends Component {
@@ -40,9 +40,7 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isUserPreferencesOpen: false };
-
-    // const onClick = this.toggleUserPreferences.bind(this);
+    this.state = { isUserPreferencesOpen: false, isOpen: false };
 
     this.loadOptions();
   }
@@ -50,11 +48,15 @@ class Header extends Component {
   loadOptions() {
     const { t } = this.props;
     this.options = [
-      // {
-      //   title: t('Preferences'),
-      //   icon: { name: 'user' },
-      //   onClick: onClick,
-      // },
+      {
+        title: t('Info'),
+        icon: { name: 'info' },
+        onClick: () => {
+          this.setState({
+            isOpen: true,
+          });
+        },
+      },
       {
         title: t('About'),
         icon: {
@@ -65,14 +67,6 @@ class Header extends Component {
     ];
 
     this.hotKeysData = hotkeysManager.hotkeyDefinitions;
-  }
-
-  toggleUserPreferences() {
-    const isOpen = this.state.isUserPreferencesOpen;
-
-    this.setState({
-      isUserPreferencesOpen: !isOpen,
-    });
   }
 
   onUserPreferencesSave({ windowLevelData, hotKeysData }) {
@@ -114,7 +108,14 @@ class Header extends Component {
         <div className="header-menu">
           <span className="research-use">{t('INVESTIGATIONAL USE ONLY')}</span>
           <Dropdown title={t('Options')} list={this.options} align="right" />
-          {/* <ConnectedUserPreferencesModal /> */}
+          <AboutModal
+            {...this.state}
+            onCancel={() =>
+              this.setState({
+                isOpen: false,
+              })
+            }
+          />
         </div>
       </div>
     );
