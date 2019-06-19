@@ -768,12 +768,19 @@ archive&apos;s web interface)</li>
 <ul>
 <li>Docker<ul>
 <li><a href="https://docs.docker.com/docker-for-mac/" target="_blank">Docker for Mac</a></li>
-<li><a href="https://docs.docker.com/docker-for-windows/" target="_blank">Docker for Windows</a></li>
+<li><a href="https://docs.docker.com/docker-for-windows/" target="_blank">Docker for Windows (recommended)</a></li>
+<li><a href="https://docs.docker.com/toolbox/toolbox_install_windows/" target="_blank">Docker Toolbox for Windows</a></li>
 </ul>
 </li>
 </ul>
 <p><em>Not sure if you have <code>docker</code> installed already? Try running <code>docker --version</code>
 in command prompt or terminal</em></p>
+<blockquote>
+<p>If you are using <code>Docker Toolbox</code> you need to change the <em>proxy</em> parameter in
+<em>package.json</em> to <a href="http://192.168.99.100:8042" target="_blank">http://192.168.99.100:8042</a> or the ip docker-machine ip
+throws. This is the value <a href="https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually" target="_blank"><code>react-scripts</code></a> uses to proxy
+requests</p>
+</blockquote>
 <h3 id="running-orthanc"><a name="running-orthanc" class="plugin-anchor" href="#running-orthanc"><i class="fa fa-link" aria-hidden="true"></i></a>Running Orthanc</h3>
 <p><em>Start Orthanc:</em></p>
 <pre><code class="lang-bash"><span class="hljs-comment"># Runs orthanc so long as window remains open</span>
@@ -840,7 +847,7 @@ like:</p>
       },
     ],
   },
-}
+};
 </code></pre>
 <p>To learn more about how you can configure the OHIF Viewer, check out our
 <a href="configuration.html">Configuration Guide</a>.</p>
@@ -928,7 +935,7 @@ Here are some of the more popular ones:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Data Source","level":"1.2.3","depth":2,"next":{"title":"Configuration","level":"1.2.4","depth":2,"path":"essentials/configuration.md","ref":"essentials/configuration.md","articles":[]},"previous":{"title":"Installation","level":"1.2.2","depth":2,"path":"essentials/installation.md","ref":"essentials/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","theme-cornerstone","-fontsettings","github","ga","sitemap","anchors","versions"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/OHIF/Viewers"},"search":{},"theme-cornerstone":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"sitemap":{"hostname":"https://docs.ohif.org"},"ga":{"configuration":"auto","token":"UA-110573590-2"},"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/OHIF/Viewers/master/docs/book.json","options":[{"value":"https://docs.ohif.org/history/v1/","text":"Version 1.0.0 (Meteor)"},{"value":"https://docs.ohif.org/","text":"Version 2.0.0","selected":true}]},"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/OHIF/Viewers/edit/master/docs"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"OHIF","links":{"sharing":{"facebook":false,"twitter":false}},"gitbook":">3.0.0","description":"Documentation for the OHIF framework"},"file":{"path":"essentials/data-source.md","mtime":"2019-06-17T12:48:34.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-17T12:53:39.645Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Data Source","level":"1.2.3","depth":2,"next":{"title":"Configuration","level":"1.2.4","depth":2,"path":"essentials/configuration.md","ref":"essentials/configuration.md","articles":[]},"previous":{"title":"Installation","level":"1.2.2","depth":2,"path":"essentials/installation.md","ref":"essentials/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","theme-cornerstone","-fontsettings","github","ga","sitemap","anchors","versions"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/OHIF/Viewers"},"search":{},"theme-cornerstone":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"sitemap":{"hostname":"https://docs.ohif.org"},"ga":{"configuration":"auto","token":"UA-110573590-2"},"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/OHIF/Viewers/master/docs/book.json","options":[{"value":"https://docs.ohif.org/history/v1/","text":"Version 1.0.0 (Meteor)"},{"value":"https://docs.ohif.org/","text":"Version 2.0.0","selected":true}]},"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/OHIF/Viewers/edit/master/docs"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"OHIF","links":{"sharing":{"facebook":false,"twitter":false}},"gitbook":">3.0.0","description":"Documentation for the OHIF framework"},"file":{"path":"essentials/data-source.md","mtime":"2019-06-19T03:33:47.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-19T03:39:12.582Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
