@@ -20,7 +20,7 @@
     "lint": "eslint -c .eslintrc --fix src && prettier --single-quote --write src/**/*.{js,jsx,json,css}"
   },
   "peerDependencies": {
-    "@ohif/i18n": "0.0.4",
+    "@ohif/i18n": "0.0.6",
     "cornerstone-core": "^2.2.8",
     "cornerstone-wado-image-loader": "^2.2.3",
     "dcmjs": "^0.4.7",
@@ -103,7 +103,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@ohif/i18n": "0.0.4",
     "react-vtkjs-viewport": "0.0.9",
     "vtk.js": "^8.9.1"
   }
