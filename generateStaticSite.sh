@@ -53,5 +53,5 @@ cd ..
 
 # Build and copy the StandaloneViewer into the static directory
 mkdir ./docs/latest/_book/demo/
-yarn install
-yarn build:web:ci
+yarn install || { sleep 120; false; }
+yarn build:web:ci || { sleep 120; false; }
