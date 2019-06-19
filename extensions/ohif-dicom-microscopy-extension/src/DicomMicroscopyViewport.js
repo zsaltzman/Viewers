@@ -8,6 +8,8 @@ class DicomMicroscopyViewport extends Component {
     error: null
   };
 
+  viewer = null;
+
   constructor(props) {
     super(props);
 
@@ -51,24 +53,24 @@ class DicomMicroscopyViewport extends Component {
       .then(metadata => {
         metadata = metadata.filter(m => m);
 
-        const viewer = new microscopyViewer({
+        this.viewer = new microscopyViewer({
           client: dicomWebClient,
           metadata
         });
 
-        viewer.render({ container });
+        this.viewer.render({ container });
       });
   }
 
   componentDidMount() {
-    const { studies, displaySet } = this.props.viewportData;
+    const { displaySet } = this.props.viewportData;
 
     this.installOpenLayersRenderer(this.container.current, displaySet);
   }
 
   render() {
     const style = { width: '100%', height: '100%' };
-    return (
+    const DicomViewer = (
       <div className={'DicomMicroscopyViewer'} style={style}>
         {this.state.error ? (
           <h2>{JSON.stringify(this.state.error)}</h2>
@@ -77,6 +79,12 @@ class DicomMicroscopyViewport extends Component {
         )}
       </div>
     );
+
+    if (this.viewer) {
+      this.viewer.resize();
+    }
+
+    return DicomViewer;
   }
 }
 
