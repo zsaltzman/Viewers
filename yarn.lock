@@ -12408,10 +12408,10 @@ react-transition-group@^2.0.0, react-transition-group@^2.2.0:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-viewerbase@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-viewerbase/-/react-viewerbase-0.9.0.tgz#947ab61bf32e1d58836a637403d128247e175d2e"
-  integrity sha512-VeOGzno5fg9A0Ttx+O3CQ8KXPr1XbdEOVbA+JiLwcuycX3CmDsqLzODsjeXb8npfXDbQA+n/ZPCyxsB7JDEBlA==
+react-viewerbase@0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-viewerbase/-/react-viewerbase-0.9.1.tgz#fafc1cd12c0b32a65a6406be7380d8a1342c2adf"
+  integrity sha512-gTJhBt10vOFOU7b0wT+pVwvPmxJTeLSAT3Cfz989eXhBLKuyDXFNCWEEtJ1hSjnUdxR093IFIkOIixVhZNfuLQ==
   dependencies:
     "@babel/runtime" "7.2.0"
     "@ohif/i18n" "^0.0.4"
