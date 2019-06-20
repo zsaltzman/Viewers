@@ -18,7 +18,6 @@ class DicomMicroscopyViewport extends Component {
     this.container = React.createRef();
 
     this.debouncedResize = debounce(() => {
-      debugger;
       if (this.viewer) this.viewer.resize();
     }, 100);
   }
