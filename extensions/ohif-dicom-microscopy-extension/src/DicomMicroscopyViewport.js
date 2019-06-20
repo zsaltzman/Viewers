@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import ReactResizeDetector from 'react-resize-detector';
 import { api } from 'dicom-microscopy-viewer';
+import debounce from 'lodash.debounce';
 
 const microscopyViewer = api.VLWholeSlideMicroscopyImageViewer;
 
@@ -14,6 +16,11 @@ class DicomMicroscopyViewport extends Component {
     super(props);
 
     this.container = React.createRef();
+
+    this.debouncedResize = debounce(() => {
+      debugger;
+      if (this.viewer) this.viewer.resize();
+    }, 100);
   }
 
   // install the microscopy renderer into the web page.
@@ -70,8 +77,15 @@ class DicomMicroscopyViewport extends Component {
 
   render() {
     const style = { width: '100%', height: '100%' };
-    const DicomViewer = (
+    return (
       <div className={'DicomMicroscopyViewer'} style={style}>
+        {ReactResizeDetector && (
+          <ReactResizeDetector
+            handleWidth
+            handleHeight
+            onResize={this.onWindowResize}
+          />
+        )}
         {this.state.error ? (
           <h2>{JSON.stringify(this.state.error)}</h2>
         ) : (
@@ -79,13 +93,11 @@ class DicomMicroscopyViewport extends Component {
         )}
       </div>
     );
-
-    if (this.viewer) {
-      this.viewer.resize();
-    }
-
-    return DicomViewer;
   }
+
+  onWindowResize = () => {
+    this.debouncedResize();
+  };
 }
 
 export default DicomMicroscopyViewport;
