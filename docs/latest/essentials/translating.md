@@ -93,7 +93,8 @@ But, if you need to use it completely outside of OHIF viewer, you can set the
 I18nextProvider this way:
 
 ```js
-import i18n, { I18nextProvider } from '@ohif/i18n';
+import i18n from '@ohif/i18n';
+import { I18nextProvider } from 'react-i18next';
 import App from './App';
 
 <I18nextProvider i18n={i18n}>
