@@ -34,7 +34,6 @@ class StudyListWithData extends Component {
     //const params = { studyInstanceUids, seriesInstanceUids, timepointId, timepointsFilter={} };
 
     await this.searchForStudies();
-    this.props.setLoadingBar(false);
   }
 
   searchForStudies = (

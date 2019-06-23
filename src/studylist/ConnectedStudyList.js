@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import StudyListWithData from './StudyListWithData.js';
-import { setLoadingBar } from './../redux/actions.js';
 
 const isActive = a => a.active === true;
 
@@ -14,17 +13,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setLoadingBar: options => {
-      dispatch(setLoadingBar(options));
-    },
-  };
-};
-
 const ConnectedStudyList = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(StudyListWithData);
 
 export default ConnectedStudyList;

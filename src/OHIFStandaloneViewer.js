@@ -9,12 +9,12 @@ import CallbackPage from './CallbackPage.js';
 import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { NProgress } from '@tanem/react-nprogress';
+import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { ViewerbaseDragDropContext } from 'react-viewerbase';
 import Container from './Container.js';
 import Bar from './Bar.js';
-import { setLoadingBar } from './redux/actions.js';
-
+import NotFound from './NotFound.js';
 import './OHIFStandaloneViewer.css';
 import './variables.css';
 import './theme-tide.css';
@@ -36,10 +36,9 @@ import './theme-tide.css';
 const reload = () => window.location.reload();
 
 class OHIFStandaloneViewer extends Component {
-  constructor(props) {
-    super(props);
-    this.props.setLoadingBar(true);
-  }
+  state = {
+    isLoading: false,
+  };
 
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -88,48 +87,79 @@ class OHIFStandaloneViewer extends Component {
       );
     }
 
+    /**
+     * Note: this approach for routing is caused by the conflict between
+     * react-transition-group and react-router's <Switch> component.
+     *
+     * See http://reactcommunity.org/react-transition-group/with-react-router/
+     */
+    const routes = [
+      {
+        path: '/',
+        Component: StudyListRouting,
+      },
+      {
+        path: '/studylist',
+        Component: StudyListRouting,
+      },
+      {
+        path: '/viewer',
+        Component: StandaloneRouting,
+      },
+      {
+        path: '/viewer/:studyInstanceUids',
+        Component: ViewerRouting,
+      },
+      {
+        path: '/study/:studyInstanceUid/series/:seriesInstanceUids',
+        Component: ViewerRouting,
+      },
+      {
+        path: '/IHEInvokeImageDisplay',
+        Component: IHEInvokeImageDisplay,
+      },
+    ];
+
+    const currentPath = this.props.location.pathname;
+    const noMatchingRoutes = !routes.find(r => r.path === currentPath);
+
     return (
-      <Switch>
-        <Route
-          render={({ location }) => (
-            <React.Fragment>
-              <NProgress isAnimating={this.props.isLoading} key={location.key}>
-                {({ isFinished, progress, animationDuration }) => (
-                  <Container
-                    isFinished={isFinished}
-                    animationDuration={animationDuration}
-                  >
-                    <Bar
-                      progress={progress}
-                      animationDuration={animationDuration}
-                    />
-                  </Container>
-                )}
-              </NProgress>
-              <Route exact path="/silent-refresh.html" onEnter={reload} />
-              <Route exact path="/logout-redirect.html" onEnter={reload} />
-              <Route exact path="/studylist" component={StudyListRouting} />
-              <Route exact path="/" component={StudyListRouting} />
-              <Route exact path="/viewer" component={StandaloneRouting} />
-              <Route
-                path="/viewer/:studyInstanceUids"
-                component={ViewerRouting}
-              />
-              <Route
-                path="/study/:studyInstanceUid/series/:seriesInstanceUids"
-                component={ViewerRouting}
-              />
-              <Route
-                path="/IHEInvokeImageDisplay"
-                component={IHEInvokeImageDisplay}
-              />
-              <Route
-                render={() => <div> Sorry, this page does not exist. </div>}
-              />
-            </React.Fragment>
+      <>
+        <NProgress isAnimating={this.state.isLoading}>
+          {({ isFinished, progress, animationDuration }) => (
+            <Container
+              isFinished={isFinished}
+              animationDuration={animationDuration}
+            >
+              <Bar progress={progress} animationDuration={animationDuration} />
+            </Container>
           )}
-        />
-      </Switch>
+        </NProgress>
+        <Route exact path="/silent-refresh.html" onEnter={reload} />
+        <Route exact path="/logout-redirect.html" onEnter={reload} />
+        {!noMatchingRoutes &&
+          routes.map(({ path, Component }) => (
+            <Route key={path} exact path={path}>
+              {({ match }) => (
+                <CSSTransition
+                  in={match !== null}
+                  timeout={300}
+                  classNames="fade"
+                  unmountOnExit
+                  onEnter={() => {
+                    this.setState({ isLoading: true });
+                  }}
+                  onEntered={() => {
+                    this.setState({ isLoading: false });
+                  }}
+                >
+                  {match === null ? <></> : <Component match={match} />}
+                </CSSTransition>
+              )}
+            </Route>
+          ))}
+        {noMatchingRoutes && <NotFound />}
+      </>
     );
   }
 }
@@ -137,21 +167,12 @@ class OHIFStandaloneViewer extends Component {
 const mapStateToProps = state => {
   return {
     user: state.oidc.user,
-    isLoading: state.ui.isLoading,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setLoadingBar: options => {
-      dispatch(setLoadingBar(options));
-    },
   };
 };
 
 const ConnectedOHIFStandaloneViewer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(OHIFStandaloneViewer);
 
 export default ViewerbaseDragDropContext(

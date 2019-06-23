@@ -1,0 +1,14 @@
+.not-found {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+}
+
+.not-found > h4,
+.not-found > h5 {
+  display: block;
+}
