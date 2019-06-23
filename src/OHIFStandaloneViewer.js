@@ -6,7 +6,7 @@ import ViewerRouting from './routes/ViewerRouting.js';
 import StudyListRouting from './studylist/StudyListRouting.js';
 import StandaloneRouting from './routes/StandaloneRouting.js';
 import CallbackPage from './CallbackPage.js';
-import { withRouter } from 'react-router';
+import { withRouter, matchPath } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { NProgress } from '@tanem/react-nprogress';
 import { CSSTransition } from 'react-transition-group';
@@ -121,7 +121,12 @@ class OHIFStandaloneViewer extends Component {
     ];
 
     const currentPath = this.props.location.pathname;
-    const noMatchingRoutes = !routes.find(r => r.path === currentPath);
+    const noMatchingRoutes = !routes.find(r =>
+      matchPath(currentPath, {
+        path: r.path,
+        exact: true,
+      })
+    );
 
     return (
       <>
