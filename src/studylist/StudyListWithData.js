@@ -29,11 +29,11 @@ class StudyListWithData extends Component {
     .toDate();
   static defaultStudyDateTo = new Date();
 
-  async componentDidMount() {
+  componentDidMount() {
     // TODO: Avoid using timepoints here
     //const params = { studyInstanceUids, seriesInstanceUids, timepointId, timepointsFilter={} };
 
-    await this.searchForStudies();
+    this.searchForStudies();
   }
 
   searchForStudies = (

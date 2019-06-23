@@ -3,7 +3,6 @@ const defaultState = {
   rightSidebarOpen: false,
   labelling: {},
   contextMenu: {},
-  isLoading: false,
 };
 
 const ui = (state = defaultState, action) => {
@@ -32,10 +31,6 @@ const ui = (state = defaultState, action) => {
       return Object.assign({}, state, {
         labelling: defaultState.labelling,
         contextMenu: defaultState.contextMenu,
-      });
-    case 'SET_LOADING_BAR':
-      return Object.assign({}, state, {
-        isLoading: action.state,
       });
 
     default:
