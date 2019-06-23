@@ -32,7 +32,6 @@ const ui = (state = defaultState, action) => {
         labelling: defaultState.labelling,
         contextMenu: defaultState.contextMenu,
       });
-
     default:
       return state;
   }
