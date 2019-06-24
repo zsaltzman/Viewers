@@ -1,7 +1,7 @@
 import './ToolbarRow.css';
 
 import React, { Component } from 'react';
-import { RoundedButtonGroup, ToolbarButton } from 'react-viewerbase';
+import { RoundedButtonGroup, ToolbarButton, Dropdown } from 'react-viewerbase';
 import { commandsManager, extensionManager } from './../App.js';
 
 import ConnectedCineDialog from './ConnectedCineDialog';
@@ -142,6 +142,27 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
   return toolbarButtons.map((button, index) => {
     // TODO: If `button.buttons`, use `ExpandedToolMenu`
     // I don't believe any extensions currently leverage this
+    if (button.dropdown === true) {
+      button.list.forEach(b => {
+        b.onClick = () => {
+          debugger;
+          const evt = {};
+          if (b.commandName) {
+            const options = Object.assign({ evt }, b.commandOptions);
+            commandsManager.runCommand(b.commandName, options);
+          }
+        };
+      });
+
+      return (
+        <Dropdown
+          key={button.id}
+          list={button.list}
+          align={button.align}
+          title={button.label}
+        />
+      );
+    }
     return (
       <ToolbarButton
         key={button.id}

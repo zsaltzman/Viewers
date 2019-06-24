@@ -139,21 +139,22 @@ const BLEND_MODES = {
 };
 
 function _enableBlendMode(apis, blendMode = BLEND_MODES.COMPOSITE) {
+  const firstApi = apis[0];
+  const actor = firstApi.volumes[0];
+  const mapper = actor.getMapper();
+
+  actor.getProperty().setInterpolationTypeToLinear();
+  actor.getProperty().setShade(true);
+  actor.getProperty().setAmbient(0.1);
+  actor.getProperty().setDiffuse(0.9);
+  actor.getProperty().setSpecular(0.2);
+  actor.getProperty().setSpecularPower(10.0);
+
+  mapper.setBlendMode(blendMode);
+  mapper.setSampleDistance(3);
+
   apis.forEach(api => {
     const renderWindow = api.genericRenderWindow.getRenderWindow();
-    const actor = api.actors[0];
-    const mapper = actor.getMapper();
-
-
-    actor.getProperty().setInterpolationTypeToLinear();
-    actor.getProperty().setShade(true);
-    actor.getProperty().setAmbient(0.1);
-    actor.getProperty().setDiffuse(0.9);
-    actor.getProperty().setSpecular(0.2);
-    actor.getProperty().setSpecularPower(10.0);
-
-    mapper.setBlendMode(blendMode);
-    mapper.setSampleDistance(3);
 
     console.warn(`Set BlendMode: ${blendMode}`);
     renderWindow.render();
@@ -165,7 +166,7 @@ function _updateSlabWidth(apis, slabWidth) {
     const renderWindow = api.genericRenderWindow.getRenderWindow();
     const renderer = api.genericRenderWindow.getRenderer();
     const camera = renderer.getActiveCamera();
-    camera.setFreezeFocalPoint(true);
+    //camera.setFreezeFocalPoint(true);
 
     if (slabWidth === 0) {
       const dist = camera.getDistance();
@@ -230,7 +231,7 @@ const actions = {
   },
   enableCompositeBlend: async () => {
     _enableBlendMode(apis, BLEND_MODES.COMPOSITE);
-    _updateSlabWidth(apis, 0);
+    _updateSlabWidth(apis, 1);
   },
   enableMIP: async () => {
     _enableBlendMode(apis, BLEND_MODES.MAXIMUM_INTENSITY);

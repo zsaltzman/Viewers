@@ -32,69 +32,56 @@ const definitions = [
     commandOptions: {},
   },
   {
-    id: 'MPR',
-    label: 'MPR',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'enableCompositeBlend',
-    commandOptions: {},
-  },
-  {
-    id: 'enableMIP',
-    label: 'MIP',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'enableMIP',
-    commandOptions: {},
-  },
-  {
-    id: 'enableMinIP',
-    label: 'MinIP',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'enableMinIP',
-    commandOptions: {},
-  },
-  {
-    id: 'enableAverageIP',
-    label: 'AverageIP',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'enableAverageIP',
-    commandOptions: {},
-  },
-  {
-    id: 'Slab5',
-    label: 'Slab 5',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'setSlabWidthTo5',
-    commandOptions: {},
-  },
+    id: 'blendOperation',
+    label: 'Slab Operation',
+    dropdown: true,
 
-  {
-    id: 'Slab25',
-    label: 'Slab 25',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'setSlabWidthTo25',
     commandOptions: {},
+    align: 'center',
+    list: [
+      {
+        title: 'None',
+        commandName: 'enableCompositeBlend'
+      },
+      {
+        title: 'MIP',
+        commandName: 'enableMIP'
+      },
+      {
+        title: 'MinIP',
+        commandName: 'enableMIP'
+      },
+      {
+        title: 'AverageIP',
+        commandName: 'enableAverageIP'
+      }
+    ]
   },
-
   {
-    id: 'Slab50',
-    label: 'Slab 50',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'setSlabWidthTo50',
+    id: 'slabThickness',
+    label: 'Slab Thickness',
+    dropdown: true,
+
     commandOptions: {},
+    align: 'center',
+    list: [
+      {
+        title: 'None',
+        commandName: 'enableCompositeBlend'
+      },
+      {
+        title: '5',
+        commandName: 'setSlabWidthTo5'
+      },
+      {
+        title: '25',
+        commandName: 'setSlabWidthTo25'
+      },
+      {
+        title: '50',
+        commandName: 'setSlabWidthTo50'
+      }
+    ]
   },
 ];
 
