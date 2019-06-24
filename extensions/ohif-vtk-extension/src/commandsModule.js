@@ -9,11 +9,12 @@ import {
 import setMPRLayout from './utils/setMPRLayout.js';
 import setViewportToVTK from './utils/setViewportToVTK.js';
 import vtkCoordinate from 'vtk.js/Sources/Rendering/Core/Coordinate';
-import vtkMath from 'vtk.js/Sources/Common/Core/Math';
 import vtkMatrixBuilder from 'vtk.js/Sources/Common/Core/MatrixBuilder';
 
 // TODO: Put this somewhere else
-let apis = {};
+let apis = [];
+
+window.apis = apis;
 
 function getCrosshairCallbackForIndex(index) {
   return ({ worldPos }) => {
@@ -96,7 +97,7 @@ function _setView(api, sliceNormal, viewUp) {
   istyle.setSliceNormal(...sliceNormal);
   camera.setViewUp(...viewUp);
 
-  api.volumes[0].getMapper().setSampleDistance(5.0);
+  api.volumes[0].getMapper().setSampleDistance(2.0);
   api.volumes[0].getMapper().setMaximumSamplesPerRay(2000);
 
   renderWindow.render();
@@ -128,6 +129,58 @@ function switchMPRInteractors(api, istyle) {
     }
     istyle.setVolumeMapper(api.volumes[0]);
   }
+}
+
+const BLEND_MODES = {
+  COMPOSITE: 0,
+  MAXIMUM_INTENSITY: 1,
+  MINIMUM_INTENSITY: 2,
+  AVERAGE_INTENSITY: 3
+};
+
+function _enableBlendMode(apis, blendMode = BLEND_MODES.COMPOSITE) {
+  apis.forEach(api => {
+    const renderWindow = api.genericRenderWindow.getRenderWindow();
+    const actor = api.actors[0];
+    const mapper = actor.getMapper();
+
+
+    actor.getProperty().setInterpolationTypeToLinear();
+    actor.getProperty().setShade(true);
+    actor.getProperty().setAmbient(0.1);
+    actor.getProperty().setDiffuse(0.9);
+    actor.getProperty().setSpecular(0.2);
+    actor.getProperty().setSpecularPower(10.0);
+
+    mapper.setBlendMode(blendMode);
+    mapper.setSampleDistance(3);
+
+    console.warn(`Set BlendMode: ${blendMode}`);
+    renderWindow.render();
+  });
+}
+
+function _updateSlabWidth(apis, slabWidth) {
+  apis.forEach(api => {
+    const renderWindow = api.genericRenderWindow.getRenderWindow();
+    const renderer = api.genericRenderWindow.getRenderer();
+    const camera = renderer.getActiveCamera();
+    camera.setFreezeFocalPoint(true);
+
+    if (slabWidth === 0) {
+      const dist = camera.getDistance();
+      camera.setClippingRange(dist, dist + 1);
+
+      return;
+    }
+
+    const [rmin, rmax] = camera.getClippingRange();
+    const mid = (rmin + rmax) / 2;
+
+    camera.setClippingRange(mid - slabWidth, mid + slabWidth);
+
+    renderWindow.render();
+  });
 }
 
 const actions = {
@@ -175,6 +228,31 @@ const actions = {
       switchMPRInteractors(api, istyle);
     });
   },
+  enableCompositeBlend: async () => {
+    _enableBlendMode(apis, BLEND_MODES.COMPOSITE);
+    _updateSlabWidth(apis, 0);
+  },
+  enableMIP: async () => {
+    _enableBlendMode(apis, BLEND_MODES.MAXIMUM_INTENSITY);
+  },
+  enableMinIP: async () => {
+    _enableBlendMode(apis, BLEND_MODES.MINIMUM_INTENSITY);
+  },
+  enableAverageIP: async () => {
+    _enableBlendMode(apis, BLEND_MODES.AVERAGE_INTENSITY);
+  },
+  setSlabWidthTo5: () => {
+    const slabWidth = 5;
+    _updateSlabWidth(apis, slabWidth);
+  },
+  setSlabWidthTo25: () => {
+    const slabWidth = 25;
+    _updateSlabWidth(apis, slabWidth);
+  },
+  setSlabWidthTo50: () => {
+    const slabWidth = 50;
+    _updateSlabWidth(apis, slabWidth);
+  },
   mpr2d: async ({ viewports }) => {
     const displaySet =
       viewports.viewportSpecificData[viewports.activeViewportIndex];
@@ -187,6 +265,7 @@ const actions = {
     }
 
     apis = apiByViewport;
+    window.apis = apis;
 
     /*const rgbTransferFunction = apiByViewport[0].volumes[0]
       .getProperty()
@@ -286,6 +365,41 @@ const definitions = {
   },
   enableLevelTool: {
     commandFn: actions.enableLevelTool,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  enableCompositeBlend: {
+    commandFn: actions.enableCompositeBlend,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  enableMIP: {
+    commandFn: actions.enableMIP,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  enableMinIP: {
+    commandFn: actions.enableMinIP,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  enableAverageIP: {
+    commandFn: actions.enableAverageIP,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  setSlabWidthTo5: {
+    commandFn: actions.setSlabWidthTo5,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  setSlabWidthTo25: {
+    commandFn: actions.setSlabWidthTo25,
+    storeContexts: ['viewports'],
+    options: {},
+  },
+  setSlabWidthTo50: {
+    commandFn: actions.setSlabWidthTo50,
     storeContexts: ['viewports'],
     options: {},
   },
