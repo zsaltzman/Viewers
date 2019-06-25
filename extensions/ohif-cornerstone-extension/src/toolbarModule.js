@@ -98,6 +98,16 @@ const definitions = [
       behavior: 'CINE',
     },
   },
+  {
+    id: 'Hotkeys',
+    label: 'Change hotkeys',
+    icon: 'angle-left',
+    //
+    type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
+    options: {
+      behavior: 'HOTKEYS',
+    },
+  },
 ];
 
 export default {

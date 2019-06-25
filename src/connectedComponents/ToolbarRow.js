@@ -7,6 +7,8 @@ import { commandsManager, extensionManager } from './../App.js';
 import ConnectedCineDialog from './ConnectedCineDialog';
 import ConnectedLayoutButton from './ConnectedLayoutButton';
 import ConnectedPluginSwitch from './ConnectedPluginSwitch.js';
+import HotkeyDialog from '../components/HotkeyDialog.js';
+
 import { MODULE_TYPES } from 'ohif-core';
 import PropTypes from 'prop-types';
 
@@ -40,6 +42,7 @@ class ToolbarRow extends Component {
       toolbarButtons: toolbarButtonDefinitions,
       activeButtons: [],
       isCineDialogOpen: false,
+      isHotkeysDialogOpen: false
     };
 
     this._handleBuiltIn = _handleBuiltIn.bind(this);
@@ -102,6 +105,13 @@ class ToolbarRow extends Component {
       zIndex: 999,
     };
 
+    const hotkeysDialogContainerStyle = {
+      display: this.state.isHotkeysDialogOpen ? 'block' : 'none',
+      position: 'absolute', 
+      top: '82px',
+      zIndex: 999
+    };
+
     return (
       <>
         <div className="ToolbarRow">
@@ -128,6 +138,9 @@ class ToolbarRow extends Component {
         </div>
         <div className="CineDialogContainer" style={cineDialogContainerStyle}>
           <ConnectedCineDialog />
+        </div>
+        <div className="HotkeyDialogContainer" style={hotkeysDialogContainerStyle}>
+          <HotkeyDialog />
         </div>
       </>
     );
@@ -192,6 +205,10 @@ function _handleBuiltIn({ behavior } = {}) {
   if (behavior === 'CINE') {
     this.setState({
       isCineDialogOpen: !this.state.isCineDialogOpen,
+    });
+  } else if (behavior === 'HOTKEYS') {
+    this.setState({
+      isHotkeysDialogOpen: !this.state.isHotkeysDialogOpen
     });
   }
 }
