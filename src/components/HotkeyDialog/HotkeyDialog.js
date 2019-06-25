@@ -1,44 +1,55 @@
 import React, {Component} from 'react';
-import './HotkeyDialog.css';
-
 import { hotkeysManager } from '../../App.js';
 
-class HotkeyMenu extends Component {
-  state = { show : false };
+import PropTypes from 'prop-types';
+
+import './HotkeyDialog.css';
+
+export class HotkeyMenu extends Component {
+
+  static defaultProps = {
+    'dropdownVisible' : false
+  };
+
+  static propTypes = {
+    dropdownVisible : PropTypes.bool.isRequired
+  };
+
+  state = { 'show' : false, 'dropdownVisible': this.props.dropdownVisible };
 
   constructor(props) {
     super(props);
-    let numbers = [1,2,3,4,5];
-    console.log('hotkey def', hotkeysManager.hotkeyDefinitions);
+   
     this.elements = [];
     this.sortedKeys = Object.keys(hotkeysManager.hotkeyDefinitions).map( (key) => {
-      return <li key={key} onClick={this.onKeyClick.bind(this, key)}>{key}</li>; 
+      return <li key={key} onClick={this.onListItemClick.bind(this, key)}>{key}</li>; 
     });
-
-
-    console.log('sorted keys', this.sortedKeys);
   }
 
-  onKeyClick = (key, e) => {
-    console.log('event', e, 'key', key);
+  onListItemClick = (key, e) => {
+    this.setState( (state, props) => ({
+        'dropdownVisible' : !state.dropdownVisible
+    }));
+
+    //hotkeysManager.hotkeyDefinitions[key] = 
+
     //let entry = hotkeysManager.hotkeyDefinitions[];
   };
 
-  onShow = () => {
-    let listeners = hotkeysManager;
-    console.log('listeners', hotkeysManager.hotkeyDefinitions);
-  };
-
   render = () => {
+    let dropdownStyle = {
+      'display' : this.state.dropdownVisible ? 'block' : 'none'
+    };
+
     return ( 
       <div className='hotkey-menu-container'> 
         <ul>
         {this.sortedKeys}
         </ul>
+        <a style={dropdownStyle}>Press a key to change this binding...</a>
       </div>
     );
     }
 }
-
 
 export default HotkeyMenu;
