@@ -1,6 +1,8 @@
-.hotkey-menu-container .btn{
-	color : black;
+.hotkey-menu-container li {
+	color : rgb(156, 206, 249);
 }
 
 .hotkey-menu-container li:hover {
+	color : white;
+	background-color : rgba(156, 206, 249, 0.5);
 }
