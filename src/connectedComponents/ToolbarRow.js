@@ -7,7 +7,7 @@ import { commandsManager, extensionManager } from './../App.js';
 import ConnectedCineDialog from './ConnectedCineDialog';
 import ConnectedLayoutButton from './ConnectedLayoutButton';
 import ConnectedPluginSwitch from './ConnectedPluginSwitch.js';
-import HotkeyDialog from '../components/HotkeyDialog.js';
+import HotkeyDialog from '../components/HotkeyDialog/HotkeyDialog.js';
 
 import { MODULE_TYPES } from 'ohif-core';
 import PropTypes from 'prop-types';
@@ -207,6 +207,7 @@ function _handleBuiltIn({ behavior } = {}) {
       isCineDialogOpen: !this.state.isCineDialogOpen,
     });
   } else if (behavior === 'HOTKEYS') {
+
     this.setState({
       isHotkeysDialogOpen: !this.state.isHotkeysDialogOpen
     });
